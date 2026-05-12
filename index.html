@@ -1,63 +1,310 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>Match Bridge Support</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      max-width: 720px;
-      margin: 60px auto;
-      padding: 0 20px;
-      line-height: 1.6;
-      color: #111;
-    }
-    h1 {
-      font-size: 28px;
-    }
-    h2 {
-      margin-top: 32px;
-    }
-    a {
-      color: #4F46E5;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單字練習工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1c1c1a;min-height:100vh;padding:2rem 1rem 4rem}
+#app{max-width:640px;margin:0 auto}
+h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bottom:3px}
+.sub{font-size:13px;color:#999;margin-bottom:1.5rem}
+.tabs{display:flex;background:#edece8;border-radius:12px;padding:3px;margin-bottom:1.5rem;gap:3px}
+.tab{flex:1;padding:9px;border:none;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;background:transparent;color:#888;transition:all 0.18s}
+.tab.on{background:#fff;color:#1c1c1a;box-shadow:0 1px 4px rgba(0,0,0,0.09)}
+.sec{display:none}.sec.on{display:block}
+.box{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:12px}
+label{font-size:12px;color:#aaa;display:block;margin-bottom:6px}
+.irow{display:flex;gap:8px}
+input[type=password],input[type=text]{font-family:'DM Sans',sans-serif;font-size:14px;color:#1c1c1a;background:#f7f6f2;border:1px solid #e8e7e2;border-radius:8px;outline:none;padding:9px 12px;flex:1}
+input:focus{border-color:#aaa}
+textarea{font-family:'DM Sans',sans-serif;width:100%;border:none;background:transparent;resize:none;min-height:80px;line-height:1.6;font-size:15px;color:#1c1c1a;outline:none}
+textarea::placeholder,input::placeholder{color:#ccc}
+.ifooter{display:flex;justify-content:space-between;align-items:center;padding-top:8px;margin-top:8px;border-top:1px solid #f0efe9}
+.hint{font-size:12px;color:#ccc}
+.btn{border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:opacity 0.15s,transform 0.1s}
+.btn:active{transform:scale(0.97)}
+.btn:disabled{opacity:0.35;cursor:default}
+.btn-ink{background:#1c1c1a;color:#fff}
+.btn-soft{background:#edece8;color:#555;border:none}
+.btn-full{width:100%;padding:11px;margin-top:4px}
+.astatus{font-size:12px;margin-top:5px}
+.aok{color:#2d7a5f}.ano{color:#b44}
+.prog{height:2px;background:#edece8;border-radius:2px;margin-bottom:1.25rem;display:none;overflow:hidden}
+.pfill{height:100%;background:#1c1c1a;border-radius:2px;transition:width 0.3s;width:0}
+.wcard{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:10px;animation:up 0.2s ease}
+@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.whead{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.wtitle{font-size:20px;font-family:'DM Serif Display',serif;font-weight:400}
+.badge{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
+.bpos{background:#f0efe9;color:#777}
+.bspeak{background:#e2f5ee;color:#1a6b4a}
+.bformal{background:#eeeeff;color:#4444aa}
+.wrow{display:flex;gap:8px;margin-bottom:6px}
+.wl{font-size:12px;color:#bbb;min-width:50px;flex-shrink:0;padding-top:2px}
+.wv{font-size:14px;color:#444;line-height:1.6;flex:1}
+.altbox{font-size:13px;color:#1a6b4a;background:#e2f5ee;border-radius:8px;padding:7px 10px;margin:6px 0;line-height:1.6}
+.exline{font-size:14px;color:#555;line-height:1.7;border-left:2px solid #e8e7e2;padding-left:10px;margin-top:6px}
+.exline em{font-style:normal;font-weight:600;color:#1c1c1a}
+.hr{height:1px;background:#f0efe9;margin:8px 0}
+.lcard{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem;display:flex;align-items:center;gap:10px;color:#bbb;font-size:14px;margin-bottom:10px}
+.spin{width:14px;height:14px;border:2px solid #e8e7e2;border-top-color:#999;border-radius:50%;animation:sp 0.7s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ecard{background:#fff8f8;border:1px solid #f5d0d0;border-radius:14px;padding:1rem;color:#b44;font-size:14px;margin-bottom:10px}
+.qbanner{display:none;margin-bottom:12px}
+.qmpty{text-align:center;padding:2.5rem 1rem;color:#bbb;font-size:14px;line-height:1.9}
+.srow{display:flex;gap:10px;margin-bottom:1.25rem}
+.sbox{flex:1;background:#fff;border:1px solid #e8e7e2;border-radius:12px;padding:.75rem;text-align:center}
+.sn{font-size:22px;font-weight:600}
+.sl{font-size:12px;color:#aaa;margin-top:2px}
+.mrow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.mbtn{padding:7px 14px;border:1.5px solid #e8e7e2;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff;cursor:pointer;color:#999;transition:all 0.15s}
+.mbtn.on{border-color:#1c1c1a;color:#1c1c1a}
+.qcard{background:#fff;border:1px solid #e8e7e2;border-radius:16px;padding:1.5rem;margin-bottom:12px}
+.qword{font-size:32px;font-family:'DM Serif Display',serif;font-weight:400;text-align:center;margin-bottom:4px}
+.qpos{font-size:13px;color:#aaa;text-align:center;margin-bottom:1.5rem}
+.qprompt{font-size:13px;color:#bbb;text-align:center;margin-bottom:1rem}
+.choices{display:flex;flex-direction:column;gap:8px}
+.ch{padding:12px 16px;border:1.5px solid #e8e7e2;border-radius:10px;font-size:15px;background:#fff;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;color:#1c1c1a;transition:all 0.15s;line-height:1.5}
+.ch:hover{border-color:#ccc;background:#fafaf7}
+.ch.ok{background:#e2f5ee;border-color:#2d9e72;color:#1a6b4a}
+.ch.no{background:#fff0f0;border-color:#e05050;color:#a03030}
+.ch.dim{background:#f7f6f2;border-color:#e8e7e2;color:#bbb;cursor:default}
+.qres{margin-top:1rem;display:none}
+.qres.on{display:block}
+.qok{background:#e2f5ee;color:#1a6b4a;border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:14px}
+.qno{background:#fff0f0;color:#a03030;border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:14px}
+.qex{font-size:13px;color:#666;line-height:1.7;border-left:2px solid #e8e7e2;padding-left:10px;margin-top:6px}
+.qex em{font-style:normal;font-weight:600;color:#1c1c1a}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.qct{font-size:13px;color:#bbb}
+.filinput{width:100%;border:2px solid #e8e7e2;border-radius:10px;padding:12px;font-size:22px;font-family:'DM Serif Display',serif;outline:none;text-align:center;margin-bottom:10px;background:#fff;color:#1c1c1a;letter-spacing:1px;transition:border-color 0.15s}
+.filinput:focus{border-color:#aaa}
+.filinput.ok{border-color:#2d9e72;background:#e2f5ee;color:#1a6b4a}
+.filinput.no{border-color:#e05050;background:#fff0f0;color:#a03030}
+.summ{text-align:center;padding:2rem 1rem;background:#fff;border:1px solid #e8e7e2;border-radius:16px}
+.spct{font-size:48px;font-family:'DM Serif Display',serif;font-weight:400;margin-bottom:4px}
+.smsg{font-size:14px;color:#888;margin-bottom:1.5rem}
+.sbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+</style>
 </head>
 <body>
+<div id="app">
+  <h1>單字練習工具</h1>
+  <p class="sub">分析詞性與口語程度，測驗確認記住了沒</p>
 
-<h1>Match Bridge Support</h1>
+  <div class="tabs">
+    <button class="tab on" onclick="go('analyze')">分析單字</button>
+    <button class="tab" onclick="go('quiz')">測驗</button>
+  </div>
 
-<h2>About Match Bridge</h2>
-<p>
-Match Bridge is a location-based social networking platform that allows users to connect through mutual consent matching.
-</p>
+  <div class="sec on" id="sec-analyze">
+    <div class="box">
+      <label>Anthropic API Key</label>
+      <div class="irow">
+        <input type="password" id="apiKey" placeholder="sk-ant-...">
+        <button class="btn btn-soft" onclick="saveKey()">儲存</button>
+      </div>
+      <div class="astatus" id="ast"></div>
+    </div>
+    <div class="box">
+      <textarea id="wi" placeholder="貼上單字，空格或換行分隔&#10;例如：reluctant vague gritty compensate..."></textarea>
+      <div class="ifooter">
+        <span class="hint">一次最多 20 個</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-soft" onclick="clearA()">清除</button>
+          <button class="btn btn-ink" id="abtn" onclick="doAnalyze()">分析 →</button>
+        </div>
+      </div>
+    </div>
+    <div class="prog" id="prog"><div class="pfill" id="pfill"></div></div>
+    <div id="ares"></div>
+    <div class="qbanner" id="qbanner">
+      <button class="btn btn-ink btn-full" onclick="go('quiz')">開始測驗這批單字 →</button>
+    </div>
+  </div>
 
-<h2>Contact Support</h2>
-<p>
-If you have any questions or need assistance, please contact us:
-</p>
-<p>
-📧 Email: <a href="mailto:orjck54836@gmail.com">orjck54836@gmail.com</a><br>
-Response time: within 48 hours
-</p>
+  <div class="sec" id="sec-quiz">
+    <div id="qempty" class="qmpty">請先到「分析單字」輸入單字，<br>再回來測驗。</div>
+    <div id="qready" style="display:none">
+      <div class="srow">
+        <div class="sbox"><div class="sn" id="st">0</div><div class="sl">單字</div></div>
+        <div class="sbox"><div class="sn" id="sc" style="color:#2d7a5f">0</div><div class="sl">答對</div></div>
+        <div class="sbox"><div class="sn" id="sw" style="color:#b44">0</div><div class="sl">答錯</div></div>
+      </div>
+      <div class="mrow">
+        <button class="mbtn on" id="m-mc" onclick="setMode('mc')">選擇題</button>
+        <button class="mbtn" id="m-fill" onclick="setMode('fill')">填空拼字</button>
+        <button class="mbtn" id="m-spoken" onclick="setMode('spoken')">口語判斷</button>
+      </div>
+      <div id="qa"></div>
+    </div>
+  </div>
+</div>
 
-<h2>Account & Data</h2>
-<p>
-Users can delete their account directly within the app.  
-All associated data will be permanently deleted upon confirmation.
-</p>
+<script>
+const SK='vt_key_v3';
+let vocab=[],deck=[],idx=0,mode='mc',score={c:0,w:0},done=false;
 
-<h2>Privacy Policy</h2>
-<p>
-<a href="privacy.html">View Privacy Policy</a>
-</p>
+function loadKey(){const k=localStorage.getItem(SK)||'';if(k){document.getElementById('apiKey').value=k;ast('Key 已載入',1);}}
+function saveKey(){const k=document.getElementById('apiKey').value.trim();if(!k.startsWith('sk-')){ast('格式不對，應以 sk- 開頭',0);return;}localStorage.setItem(SK,k);ast('已儲存',1);}
+function ast(m,ok){const e=document.getElementById('ast');e.textContent=m;e.className='astatus '+(ok?'aok':'ano');}
+function getKey(){return document.getElementById('apiKey').value.trim();}
 
-<h2>Company Information</h2>
-<p>
-Match Bridge<br>
-Email: orjck54836@gmail.com
-</p>
+function go(t){
+  ['analyze','quiz'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['analyze','quiz'][i]===t));
+  if(t==='quiz')initQuiz();
+}
 
+function clearA(){document.getElementById('wi').value='';document.getElementById('ares').innerHTML='';document.getElementById('qbanner').style.display='none';}
+
+function parseWords(raw){return[...new Set(raw.split(/[\s,，、\n]+/).map(w=>w.trim().toLowerCase()).filter(w=>w.length>0))].slice(0,20);}
+
+async function doAnalyze(){
+  const key=getKey();if(!key){alert('請輸入 API Key');return;}
+  const words=parseWords(document.getElementById('wi').value);if(!words.length){alert('請輸入單字');return;}
+  const btn=document.getElementById('abtn');btn.disabled=true;btn.textContent='分析中...';
+  const res=document.getElementById('ares');res.innerHTML='';
+  document.getElementById('qbanner').style.display='none';vocab=[];
+  const prog=document.getElementById('prog'),fill=document.getElementById('pfill');
+  prog.style.display='block';fill.style.width='0';
+  for(let i=0;i<words.length;i++){
+    const w=words[i],lc=mkLoad(w);res.appendChild(lc);
+    try{const d=await fetchWord(w,key);lc.remove();vocab.push(d);res.appendChild(mkWCard(d));}
+    catch(e){lc.remove();res.appendChild(mkErr(w,e.message));}
+    fill.style.width=Math.round(((i+1)/words.length)*100)+'%';
+  }
+  btn.disabled=false;btn.textContent='分析 →';
+  setTimeout(()=>{prog.style.display='none';fill.style.width='0';},600);
+  if(vocab.length>=2)document.getElementById('qbanner').style.display='block';
+}
+
+async function fetchWord(word,key){
+  const prompt=`Analyze the English word: "${word}"
+Return ONLY valid JSON (no markdown fences):
+{"word":"${word}","pos":"詞性 in Chinese","chinese":"2-4 char Chinese meaning","is_spoken":true or false,"spoken_alternative":"if not spoken: casual equivalent + brief Chinese note. else empty string","example":"one sentence. wrap target word like **word**. add Chinese translation in parentheses at end","definition":"English definition under 8 words"}`;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})
+  });
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||'HTTP '+r.status);}
+  const data=await r.json();
+  const txt=data.content.map(b=>b.text||'').join('').trim().replace(/```json|```/g,'').trim();
+  return JSON.parse(txt);
+}
+
+function bold(s,w){return(s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>').replace(new RegExp('\\b('+w+')\\b','gi'),'<em>$1</em>');}
+function mkWCard(d){
+  const el=document.createElement('div');el.className='wcard';
+  const sb=d.is_spoken?'<span class="badge bspeak">口語常用</span>':'<span class="badge bformal">書面/正式</span>';
+  const alt=(!d.is_spoken&&d.spoken_alternative)?`<div class="altbox">口語說法：${d.spoken_alternative}</div>`:'';
+  el.innerHTML=`<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
+<div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
+<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>`;
+  return el;
+}
+function mkLoad(w){const e=document.createElement('div');e.className='lcard';e.innerHTML=`<div class="spin"></div><span>分析「${w}」…</span>`;return e;}
+function mkErr(w,m){const e=document.createElement('div');e.className='ecard';e.textContent=`"${w}" 失敗：${m}`;return e;}
+
+function initQuiz(){
+  const empty=document.getElementById('qempty'),ready=document.getElementById('qready');
+  if(vocab.length<2){empty.style.display='block';ready.style.display='none';return;}
+  empty.style.display='none';ready.style.display='block';
+  document.getElementById('st').textContent=vocab.length;
+  score={c:0,w:0};updScore();deck=shuf([...vocab]);idx=0;done=false;render();
+}
+function setMode(m){
+  mode=m;['mc','fill','spoken'].forEach(id=>document.getElementById('m-'+id).classList.toggle('on',id===m));
+  deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render();
+}
+function updScore(){document.getElementById('sc').textContent=score.c;document.getElementById('sw').textContent=score.w;}
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function render(){
+  const qa=document.getElementById('qa');
+  if(idx>=deck.length){renderSum(qa);return;}
+  const item=deck[idx];done=false;
+  if(mode==='mc')renderMC(qa,item);
+  else if(mode==='fill')renderFill(qa,item);
+  else renderSpoken(qa,item);
+}
+
+function nav(){return`<div class="qnav"><span class="qct">${idx+1} / ${deck.length}</span><button class="btn btn-ink" id="nxt" onclick="next()" style="display:none">下一題 →</button></div>`;}
+
+function renderMC(qa,item){
+  const others=shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
+  const choices=shuf([item.chinese,...others]);
+  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qpos">${item.pos}</div>
+<div class="qprompt">選出正確的中文意思</div>
+<div class="choices">${choices.map(c=>`<button class="ch" onclick="chkMC(this,'${esc(c)}','${esc(item.chinese)}')">${c}</button>`).join('')}</div>
+<div class="qres" id="qr"></div></div>${nav()}`;
+}
+function chkMC(btn,chosen,correct){
+  if(done)return;done=true;
+  const ok=chosen===correct;
+  if(ok){score.c++;btn.classList.add('ok');}
+  else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
+  updScore();showRes(ok);
+}
+
+function renderFill(qa,item){
+  qa.innerHTML=`<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
+<div class="qword" style="font-size:18px;font-family:'DM Sans',sans-serif;color:#888;font-weight:400;margin-bottom:1.25rem">${item.chinese}</div>
+<div class="qprompt">拼出這個英文單字</div>
+<input class="filinput" id="fi" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="輸入英文...">
+<div style="text-align:center"><button class="btn btn-ink" onclick="chkFill('${esc(item.word)}')">確認</button></div>
+<div class="qres" id="qr"></div></div>${nav()}`;
+  const fi=document.getElementById('fi');fi.focus();
+  fi.addEventListener('keydown',e=>{if(e.key==='Enter')chkFill(item.word);});
+}
+function chkFill(correct){
+  if(done)return;const fi=document.getElementById('fi');const val=fi.value.trim().toLowerCase();if(!val)return;
+  done=true;const ok=val===correct.toLowerCase();
+  fi.classList.add(ok?'ok':'no');if(ok)score.c++;else{score.w++;fi.value=correct;}
+  updScore();showRes(ok);
+}
+
+function renderSpoken(qa,item){
+  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qpos">${item.pos} — ${item.chinese}</div>
+<div class="qprompt" style="margin-top:1rem">這個單字在日常口語中常用嗎？</div>
+<div class="choices" style="flex-direction:row;gap:10px;display:flex">
+  <button class="ch" style="flex:1;text-align:center" onclick="chkSpoken(this,true,${item.is_spoken})">是，口語常用</button>
+  <button class="ch" style="flex:1;text-align:center" onclick="chkSpoken(this,false,${item.is_spoken})">不是，較書面</button>
+</div>
+<div class="qres" id="qr"></div></div>${nav()}`;
+}
+function chkSpoken(btn,chosen,correct){
+  if(done)return;done=true;const ok=chosen===correct;
+  if(ok){score.c++;btn.classList.add('ok');}
+  else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{const bv=b.textContent.includes('口語');if(bv===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
+  updScore();showRes(ok);
+}
+
+function showRes(ok){
+  const item=deck[idx],el=document.getElementById('qr');
+  const alt=(!item.is_spoken&&item.spoken_alternative)?`<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>`:'';
+  el.className='qres on';
+  el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example,item.word)}</div>`;
+  document.getElementById('nxt').style.display='inline-block';
+}
+function next(){idx++;done=false;render();}
+
+function renderSum(qa){
+  const total=score.c+score.w,pct=total?Math.round(score.c/total*100):0;
+  const msg=pct>=80?'很棒，繼續保持！':pct>=50?'還不錯，再複習一下！':'繼續加油！';
+  qa.innerHTML=`<div class="summ"><div class="spct">${pct}%</div><div class="smsg">${score.c} / ${total} 答對 &nbsp;·&nbsp; ${msg}</div>
+<div class="sbtns"><button class="btn btn-ink" onclick="reAll()">再來一次</button><button class="btn btn-soft" onclick="reMiss()">換個模式</button></div></div>`;
+}
+function reAll(){deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render();}
+function reMiss(){const modes=['mc','fill','spoken'];setMode(modes[(modes.indexOf(mode)+1)%modes.length]);}
+function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+
+loadKey();
+</script>
 </body>
 </html>
