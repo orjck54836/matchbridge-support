@@ -31,14 +31,19 @@ textarea::placeholder,input::placeholder{color:#ccc}
 .btn-ink{background:#1c1c1a;color:#fff}
 .btn-soft{background:#edece8;color:#555;border:none}
 .btn-full{width:100%;padding:11px;margin-top:4px}
+.btn-red{background:#fff0f0;color:#b44;border:none}
 .astatus{font-size:12px;margin-top:5px}
 .aok{color:#2d7a5f}.ano{color:#b44}
 .prog{height:2px;background:#edece8;border-radius:2px;margin-bottom:1.25rem;display:none;overflow:hidden}
 .pfill{height:100%;background:#1c1c1a;border-radius:2px;transition:width 0.3s;width:0}
+.bank-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.bank-title{font-size:13px;color:#aaa}
+.bank-count{font-size:13px;font-weight:500;color:#1c1c1a}
 .wcard{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:10px;animation:up 0.2s ease}
 @keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.whead{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.whead{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:6px}
 .wtitle{font-size:20px;font-family:'DM Serif Display',serif;font-weight:400}
+.wkk{font-size:13px;color:#999;font-family:monospace;margin-bottom:8px}
 .badge{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
 .bpos{background:#f0efe9;color:#777}
 .bspeak{background:#e2f5ee;color:#1a6b4a}
@@ -54,6 +59,7 @@ textarea::placeholder,input::placeholder{color:#ccc}
 .spin{width:14px;height:14px;border:2px solid #e8e7e2;border-top-color:#999;border-radius:50%;animation:sp 0.7s linear infinite;flex-shrink:0}
 @keyframes sp{to{transform:rotate(360deg)}}
 .ecard{background:#fff8f8;border:1px solid #f5d0d0;border-radius:14px;padding:1rem;color:#b44;font-size:14px;margin-bottom:10px}
+.skip-notice{background:#fafaf5;border:1px solid #e8e7e2;border-radius:10px;padding:8px 12px;font-size:13px;color:#aaa;margin-bottom:10px}
 .qbanner{display:none;margin-bottom:12px}
 .qmpty{text-align:center;padding:2.5rem 1rem;color:#bbb;font-size:14px;line-height:1.9}
 .srow{display:flex;gap:10px;margin-bottom:1.25rem}
@@ -64,7 +70,8 @@ textarea::placeholder,input::placeholder{color:#ccc}
 .mbtn{padding:7px 14px;border:1.5px solid #e8e7e2;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff;cursor:pointer;color:#999;transition:all 0.15s}
 .mbtn.on{border-color:#1c1c1a;color:#1c1c1a}
 .qcard{background:#fff;border:1px solid #e8e7e2;border-radius:16px;padding:1.5rem;margin-bottom:12px}
-.qword{font-size:32px;font-family:'DM Serif Display',serif;font-weight:400;text-align:center;margin-bottom:4px}
+.qword{font-size:32px;font-family:'DM Serif Display',serif;font-weight:400;text-align:center;margin-bottom:2px}
+.qkk{font-size:13px;color:#bbb;text-align:center;font-family:monospace;margin-bottom:4px}
 .qpos{font-size:13px;color:#aaa;text-align:center;margin-bottom:1.5rem}
 .qprompt{font-size:13px;color:#bbb;text-align:center;margin-bottom:1rem}
 .choices{display:flex;flex-direction:column;gap:8px}
@@ -89,6 +96,9 @@ textarea::placeholder,input::placeholder{color:#ccc}
 .spct{font-size:48px;font-family:'DM Serif Display',serif;font-weight:400;margin-bottom:4px}
 .smsg{font-size:14px;color:#888;margin-bottom:1.5rem}
 .sbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.wcard-footer{display:flex;justify-content:flex-end;margin-top:8px}
+.del-btn{font-size:12px;color:#ccc;background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:6px;font-family:'DM Sans',sans-serif}
+.del-btn:hover{color:#b44;background:#fff0f0}
 </style>
 </head>
 <body>
@@ -99,8 +109,10 @@ textarea::placeholder,input::placeholder{color:#ccc}
   <div class="tabs">
     <button class="tab on" onclick="go('analyze')">分析單字</button>
     <button class="tab" onclick="go('quiz')">測驗</button>
+    <button class="tab" onclick="go('bank')">單字庫</button>
   </div>
 
+  <!-- ANALYZE -->
   <div class="sec on" id="sec-analyze">
     <div class="box">
       <label>Anthropic API Key</label>
@@ -111,11 +123,11 @@ textarea::placeholder,input::placeholder{color:#ccc}
       <div class="astatus" id="ast"></div>
     </div>
     <div class="box">
-      <textarea id="wi" placeholder="貼上單字，空格或換行分隔&#10;例如：reluctant vague gritty compensate..."></textarea>
+      <textarea id="wi" placeholder="貼上單字，空格或換行分隔&#10;已分析過的單字會自動跳過"></textarea>
       <div class="ifooter">
-        <span class="hint">一次最多 20 個</span>
+        <span class="hint">一次最多 20 個新單字</span>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-soft" onclick="clearA()">清除</button>
+          <button class="btn btn-soft" onclick="clearInput()">清除</button>
           <button class="btn btn-ink" id="abtn" onclick="doAnalyze()">分析 →</button>
         </div>
       </div>
@@ -123,10 +135,11 @@ textarea::placeholder,input::placeholder{color:#ccc}
     <div class="prog" id="prog"><div class="pfill" id="pfill"></div></div>
     <div id="ares"></div>
     <div class="qbanner" id="qbanner">
-      <button class="btn btn-ink btn-full" onclick="go('quiz')">開始測驗這批單字 →</button>
+      <button class="btn btn-ink btn-full" onclick="go('quiz')">開始測驗 →</button>
     </div>
   </div>
 
+  <!-- QUIZ -->
   <div class="sec" id="sec-quiz">
     <div id="qempty" class="qmpty">請先到「分析單字」輸入單字，<br>再回來測驗。</div>
     <div id="qready" style="display:none">
@@ -143,54 +156,101 @@ textarea::placeholder,input::placeholder{color:#ccc}
       <div id="qa"></div>
     </div>
   </div>
+
+  <!-- BANK -->
+  <div class="sec" id="sec-bank">
+    <div class="box">
+      <div class="bank-header">
+        <span class="bank-title">已儲存單字</span>
+        <span class="bank-count" id="bank-count">0 個</span>
+      </div>
+      <div class="irow" style="margin-bottom:0">
+        <input type="text" id="search" placeholder="搜尋單字..." oninput="renderBank()">
+        <button class="btn btn-red" onclick="clearBank()">清空</button>
+      </div>
+    </div>
+    <div id="bank-list"></div>
+  </div>
 </div>
 
 <script>
 const SK='vt_key_v3';
-let vocab=[],deck=[],idx=0,mode='mc',score={c:0,w:0},done=false;
+const VOCAB_SK='vt_vocab_v1';
+let vocab=[];
+let deck=[],idx=0,mode='mc',score={c:0,w:0},done=false;
 
 function loadKey(){const k=localStorage.getItem(SK)||'';if(k){document.getElementById('apiKey').value=k;ast('Key 已載入',1);}}
-function saveKey(){const k=document.getElementById('apiKey').value.trim();if(!k.startsWith('sk-')){ast('格式不對，應以 sk- 開頭',0);return;}localStorage.setItem(SK,k);ast('已儲存',1);}
+function saveKey(){const k=document.getElementById('apiKey').value.trim();if(!k.startsWith('sk-')){ast('格式不對',0);return;}localStorage.setItem(SK,k);ast('已儲存',1);}
 function ast(m,ok){const e=document.getElementById('ast');e.textContent=m;e.className='astatus '+(ok?'aok':'ano');}
 function getKey(){return document.getElementById('apiKey').value.trim();}
 
+function loadVocab(){
+  try{vocab=JSON.parse(localStorage.getItem(VOCAB_SK)||'[]');}catch{vocab=[];}
+}
+function saveVocab(){localStorage.setItem(VOCAB_SK,JSON.stringify(vocab));}
+
 function go(t){
-  ['analyze','quiz'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['analyze','quiz'][i]===t));
-  if(t==='quiz')initQuiz();
+  ['analyze','quiz','bank'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['analyze','quiz','bank'][i]===t));
+  if(t==='quiz') initQuiz();
+  if(t==='bank') renderBank();
 }
 
-function clearA(){document.getElementById('wi').value='';document.getElementById('ares').innerHTML='';document.getElementById('qbanner').style.display='none';}
+function clearInput(){document.getElementById('wi').value='';document.getElementById('ares').innerHTML='';document.getElementById('qbanner').style.display='none';}
 
-function parseWords(raw){return[...new Set(raw.split(/[\s,，、\n]+/).map(w=>w.trim().toLowerCase()).filter(w=>w.length>0))].slice(0,20);}
+function parseWords(raw){return[...new Set(raw.split(/[\s,，、\n]+/).map(w=>w.trim().toLowerCase()).filter(w=>w.length>0))];}
 
 async function doAnalyze(){
   const key=getKey();if(!key){alert('請輸入 API Key');return;}
-  const words=parseWords(document.getElementById('wi').value);if(!words.length){alert('請輸入單字');return;}
-  const btn=document.getElementById('abtn');btn.disabled=true;btn.textContent='分析中...';
+  const allWords=parseWords(document.getElementById('wi').value);
+  if(!allWords.length){alert('請輸入單字');return;}
+
+  const existing=new Set(vocab.map(v=>v.word.toLowerCase()));
+  const skipped=allWords.filter(w=>existing.has(w));
+  const newWords=allWords.filter(w=>!existing.has(w)).slice(0,20);
+
   const res=document.getElementById('ares');res.innerHTML='';
-  document.getElementById('qbanner').style.display='none';vocab=[];
+  document.getElementById('qbanner').style.display='none';
+
+  if(skipped.length){
+    const sk=document.createElement('div');sk.className='skip-notice';
+    sk.textContent=`已跳過 ${skipped.length} 個重複單字：${skipped.join('、')}`;
+    res.appendChild(sk);
+  }
+  if(!newWords.length){
+    const sk=document.createElement('div');sk.className='skip-notice';
+    sk.textContent='所有單字都已分析過，無需重複呼叫 API。';
+    res.appendChild(sk);
+    document.getElementById('qbanner').style.display='block';
+    return;
+  }
+
+  const btn=document.getElementById('abtn');btn.disabled=true;btn.textContent='分析中...';
   const prog=document.getElementById('prog'),fill=document.getElementById('pfill');
   prog.style.display='block';fill.style.width='0';
-  for(let i=0;i<words.length;i++){
-    const w=words[i],lc=mkLoad(w);res.appendChild(lc);
-    try{const d=await fetchWord(w,key);lc.remove();vocab.push(d);res.appendChild(mkWCard(d));}
-    catch(e){lc.remove();res.appendChild(mkErr(w,e.message));}
-    fill.style.width=Math.round(((i+1)/words.length)*100)+'%';
+
+  for(let i=0;i<newWords.length;i++){
+    const w=newWords[i],lc=mkLoad(w);res.appendChild(lc);
+    try{
+      const d=await fetchWord(w,key);
+      lc.remove();vocab.push(d);saveVocab();
+      res.appendChild(mkWCard(d,false));
+    }catch(e){lc.remove();res.appendChild(mkErr(w,e.message));}
+    fill.style.width=Math.round(((i+1)/newWords.length)*100)+'%';
   }
   btn.disabled=false;btn.textContent='分析 →';
   setTimeout(()=>{prog.style.display='none';fill.style.width='0';},600);
-  if(vocab.length>=2)document.getElementById('qbanner').style.display='block';
+  if(vocab.length>=2) document.getElementById('qbanner').style.display='block';
 }
 
 async function fetchWord(word,key){
   const prompt=`Analyze the English word: "${word}"
 Return ONLY valid JSON (no markdown fences):
-{"word":"${word}","pos":"詞性 in Chinese","chinese":"2-4 char Chinese meaning","is_spoken":true or false,"spoken_alternative":"if not spoken: casual equivalent + brief Chinese note. else empty string","example":"one sentence. wrap target word like **word**. add Chinese translation in parentheses at end","definition":"English definition under 8 words"}`;
+{"word":"${word}","pos":"詞性 in Chinese","chinese":"2-4 char Chinese meaning","kk":"KK phonetic transcription e.g. /rɪˈlʌktənt/","is_spoken":true or false,"spoken_alternative":"if not spoken: casual spoken equivalent + brief Chinese note. else empty string","example":"one sentence. wrap target word like **word**. add Chinese translation in parentheses at end","definition":"English definition under 8 words"}`;
   const r=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:450,messages:[{role:'user',content:prompt}]})
   });
   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||'HTTP '+r.status);}
   const data=await r.json();
@@ -199,18 +259,44 @@ Return ONLY valid JSON (no markdown fences):
 }
 
 function bold(s,w){return(s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>').replace(new RegExp('\\b('+w+')\\b','gi'),'<em>$1</em>');}
-function mkWCard(d){
+
+function mkWCard(d,showDel=true){
   const el=document.createElement('div');el.className='wcard';
   const sb=d.is_spoken?'<span class="badge bspeak">口語常用</span>':'<span class="badge bformal">書面/正式</span>';
   const alt=(!d.is_spoken&&d.spoken_alternative)?`<div class="altbox">口語說法：${d.spoken_alternative}</div>`:'';
+  const delBtn=showDel?`<div class="wcard-footer"><button class="del-btn" onclick="deleteWord('${d.word}')">刪除</button></div>`:'';
   el.innerHTML=`<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
+<div class="wkk">${d.kk||''}</div>
 <div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
-<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>`;
+<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>${delBtn}`;
   return el;
 }
 function mkLoad(w){const e=document.createElement('div');e.className='lcard';e.innerHTML=`<div class="spin"></div><span>分析「${w}」…</span>`;return e;}
 function mkErr(w,m){const e=document.createElement('div');e.className='ecard';e.textContent=`"${w}" 失敗：${m}`;return e;}
 
+function deleteWord(word){
+  if(!confirm(`確定刪除「${word}」？`))return;
+  vocab=vocab.filter(v=>v.word!==word);saveVocab();renderBank();
+}
+function clearBank(){
+  if(!confirm('確定清空所有單字？這無法復原。'))return;
+  vocab=[];saveVocab();renderBank();
+}
+
+function renderBank(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const filtered=vocab.filter(v=>v.word.toLowerCase().includes(q)||(v.chinese||'').includes(q));
+  document.getElementById('bank-count').textContent=vocab.length+' 個';
+  const list=document.getElementById('bank-list');
+  list.innerHTML='';
+  if(!filtered.length){
+    const e=document.createElement('div');e.className='qmpty';e.textContent=vocab.length?'找不到符合的單字':'單字庫是空的，請先分析單字';
+    list.appendChild(e);return;
+  }
+  filtered.forEach(d=>list.appendChild(mkWCard(d,true)));
+}
+
+// QUIZ
 function initQuiz(){
   const empty=document.getElementById('qempty'),ready=document.getElementById('qready');
   if(vocab.length<2){empty.style.display='block';ready.style.display='none';return;}
@@ -239,7 +325,10 @@ function nav(){return`<div class="qnav"><span class="qct">${idx+1} / ${deck.leng
 function renderMC(qa,item){
   const others=shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
   const choices=shuf([item.chinese,...others]);
-  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qpos">${item.pos}</div>
+  qa.innerHTML=`<div class="qcard">
+<div class="qword">${item.word}</div>
+<div class="qkk">${item.kk||''}</div>
+<div class="qpos">${item.pos}</div>
 <div class="qprompt">選出正確的中文意思</div>
 <div class="choices">${choices.map(c=>`<button class="ch" onclick="chkMC(this,'${esc(c)}','${esc(item.chinese)}')">${c}</button>`).join('')}</div>
 <div class="qres" id="qr"></div></div>${nav()}`;
@@ -253,8 +342,10 @@ function chkMC(btn,chosen,correct){
 }
 
 function renderFill(qa,item){
-  qa.innerHTML=`<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
-<div class="qword" style="font-size:18px;font-family:'DM Sans',sans-serif;color:#888;font-weight:400;margin-bottom:1.25rem">${item.chinese}</div>
+  qa.innerHTML=`<div class="qcard">
+<div class="qpos" style="margin-bottom:4px">${item.pos}</div>
+<div class="qword" style="font-size:18px;font-family:'DM Sans',sans-serif;color:#888;font-weight:400;margin-bottom:4px">${item.chinese}</div>
+<div class="qkk" style="margin-bottom:1rem">${item.kk||''}</div>
 <div class="qprompt">拼出這個英文單字</div>
 <input class="filinput" id="fi" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="輸入英文...">
 <div style="text-align:center"><button class="btn btn-ink" onclick="chkFill('${esc(item.word)}')">確認</button></div>
@@ -270,7 +361,10 @@ function chkFill(correct){
 }
 
 function renderSpoken(qa,item){
-  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qpos">${item.pos} — ${item.chinese}</div>
+  qa.innerHTML=`<div class="qcard">
+<div class="qword">${item.word}</div>
+<div class="qkk">${item.kk||''}</div>
+<div class="qpos">${item.pos} — ${item.chinese}</div>
 <div class="qprompt" style="margin-top:1rem">這個單字在日常口語中常用嗎？</div>
 <div class="choices" style="flex-direction:row;gap:10px;display:flex">
   <button class="ch" style="flex:1;text-align:center" onclick="chkSpoken(this,true,${item.is_spoken})">是，口語常用</button>
@@ -304,7 +398,7 @@ function reAll(){deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=fal
 function reMiss(){const modes=['mc','fill','spoken'];setMode(modes[(modes.indexOf(mode)+1)%modes.length]);}
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 
-loadKey();
+loadKey();loadVocab();
 </script>
 </body>
 </html>
