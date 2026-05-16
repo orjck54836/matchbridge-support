@@ -19,13 +19,13 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .box{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:12px}
 .srow{display:flex;gap:10px;margin-bottom:1.25rem}
 .sbox{flex:1;background:#fff;border:1px solid #e8e7e2;border-radius:12px;padding:.75rem;text-align:center}
-.sn{font-size:22px;font-weight:600}
-.sl{font-size:12px;color:#aaa;margin-top:2px}
+.sn{font-size:22px;font-weight:600}.sl{font-size:12px;color:#aaa;margin-top:2px}
 .mrow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
 .mbtn{padding:7px 14px;border:1.5px solid #e8e7e2;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff;cursor:pointer;color:#999;transition:all 0.15s}
 .mbtn.on{border-color:#1c1c1a;color:#1c1c1a}
-.btn{border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:opacity 0.15s,transform 0.1s}
+.btn{border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all 0.15s}
 .btn:active{transform:scale(0.97)}
+.btn:disabled{opacity:0.35;cursor:default}
 .btn-ink{background:#1c1c1a;color:#fff}
 .btn-soft{background:#edece8;color:#555;border:none}
 .badge{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
@@ -44,7 +44,6 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .exline{font-size:14px;color:#555;line-height:1.7;border-left:2px solid #e8e7e2;padding-left:10px;margin-top:6px}
 .exline em{font-style:normal;font-weight:600;color:#1c1c1a}
 .hr{height:1px;background:#f0efe9;margin:8px 0}
-.qmpty{text-align:center;padding:2.5rem 1rem;color:#bbb;font-size:14px;line-height:1.9}
 .qcard{background:#fff;border:1px solid #e8e7e2;border-radius:16px;padding:1.5rem;margin-bottom:12px}
 .qword{font-size:32px;font-family:'DM Serif Display',serif;font-weight:400;text-align:center;margin-bottom:2px}
 .qkk{font-size:13px;color:#bbb;text-align:center;font-family:monospace;margin-bottom:4px}
@@ -56,8 +55,7 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .ch.ok{background:#e2f5ee;border-color:#2d9e72;color:#1a6b4a}
 .ch.no{background:#fff0f0;border-color:#e05050;color:#a03030}
 .ch.dim{background:#f7f6f2;border-color:#e8e7e2;color:#bbb;cursor:default}
-.qres{margin-top:1rem;display:none}
-.qres.on{display:block}
+.qres{margin-top:1rem;display:none}.qres.on{display:block}
 .qok{background:#e2f5ee;color:#1a6b4a;border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:14px}
 .qno{background:#fff0f0;color:#a03030;border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:14px}
 .qex{font-size:13px;color:#666;line-height:1.7;border-left:2px solid #e8e7e2;padding-left:10px;margin-top:6px}
@@ -75,309 +73,300 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 input[type=text]{font-family:'DM Sans',sans-serif;font-size:14px;color:#1c1c1a;background:#f7f6f2;border:1px solid #e8e7e2;border-radius:8px;outline:none;padding:9px 12px;width:100%}
 input[type=text]:focus{border-color:#aaa}
 input::placeholder{color:#ccc}
+.loading{text-align:center;padding:3rem 1rem;color:#aaa;font-size:14px}
+.spin{width:28px;height:28px;border:3px solid #e8e7e2;border-top-color:#999;border-radius:50%;animation:sp 0.7s linear infinite;margin:0 auto 1rem}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err-box{background:#fff8f8;border:1px solid #f5d0d0;border-radius:14px;padding:1.5rem;text-align:center;color:#b44;font-size:14px;line-height:1.8}
+.err-box a{color:#b44}
+.setup-box{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1.5rem;margin-bottom:12px}
+.setup-box h3{font-size:15px;font-weight:600;margin-bottom:0.75rem}
+.setup-box p{font-size:13px;color:#777;line-height:1.7;margin-bottom:0.75rem}
+.setup-box code{background:#f0efe9;padding:2px 6px;border-radius:4px;font-size:12px;font-family:monospace}
+.irow{display:flex;gap:8px}
+input[type=url]{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:#f7f6f2;border:1px solid #e8e7e2;border-radius:8px;outline:none;padding:9px 12px;flex:1}
+input[type=url]:focus{border-color:#aaa}
+.astatus{font-size:12px;margin-top:6px}
+.aok{color:#2d7a5f}.ano{color:#b44}
+.reload-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:#aaa;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-bottom:1rem}
+.reload-btn:hover{color:#1c1c1a}
 </style>
 </head>
 <body>
 <div id="app">
   <h1>單字練習工具</h1>
-  <p class="sub">150 個單字 · KK音標 · 口語程度 · 三種測驗模式</p>
-  <div class="tabs">
-    <button class="tab on" onclick="go('quiz')">測驗</button>
-    <button class="tab" onclick="go('bank')">單字庫</button>
+  <p class="sub" id="word-count">載入中...</p>
+
+  <div id="setup-section">
+    <div class="setup-box">
+      <h3>📋 設定 Google Sheets 來源</h3>
+      <p>把你的 Google Sheets 發布為 CSV，貼上網址即可同步單字庫。<br>
+      步驟：試算表 → <strong>檔案 → 共用 → 發布到網路</strong> → 選 <strong>CSV</strong> → 複製連結</p>
+      <div class="irow">
+        <input type="url" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv">
+        <button class="btn btn-ink" onclick="saveSheet()">儲存</button>
+      </div>
+      <div class="astatus" id="sheetStatus"></div>
+    </div>
   </div>
 
-  <div class="sec on" id="sec-quiz">
-    <div class="srow">
-      <div class="sbox"><div class="sn" id="st">150</div><div class="sl">單字</div></div>
-      <div class="sbox"><div class="sn" id="sc" style="color:#2d7a5f">0</div><div class="sl">答對</div></div>
-      <div class="sbox"><div class="sn" id="sw" style="color:#b44">0</div><div class="sl">答錯</div></div>
+  <div id="main-section" style="display:none">
+    <button class="reload-btn" onclick="reloadData()">↻ 重新從 Google Sheets 載入</button>
+    <div class="tabs">
+      <button class="tab on" onclick="go('quiz')">測驗</button>
+      <button class="tab" onclick="go('bank')">單字庫</button>
+      <button class="tab" onclick="go('settings')">設定</button>
     </div>
-    <div class="mrow">
-      <button class="mbtn on" id="m-mc" onclick="setMode('mc')">選擇題</button>
-      <button class="mbtn" id="m-fill" onclick="setMode('fill')">填空拼字</button>
-      <button class="mbtn" id="m-spoken" onclick="setMode('spoken')">口語判斷</button>
+
+    <div class="sec on" id="sec-quiz">
+      <div class="srow">
+        <div class="sbox"><div class="sn" id="st">0</div><div class="sl">單字</div></div>
+        <div class="sbox"><div class="sn" id="sc" style="color:#2d7a5f">0</div><div class="sl">答對</div></div>
+        <div class="sbox"><div class="sn" id="sw" style="color:#b44">0</div><div class="sl">答錯</div></div>
+      </div>
+      <div class="mrow">
+        <button class="mbtn on" id="m-mc" onclick="setMode('mc')">選擇題</button>
+        <button class="mbtn" id="m-fill" onclick="setMode('fill')">填空拼字</button>
+        <button class="mbtn" id="m-spoken" onclick="setMode('spoken')">口語判斷</button>
+      </div>
+      <div id="qa"></div>
     </div>
-    <div id="qa"></div>
+
+    <div class="sec" id="sec-bank">
+      <div class="box" style="margin-bottom:12px">
+        <input type="text" id="search" placeholder="搜尋單字或中文..." oninput="renderBank()">
+      </div>
+      <div id="bank-list"></div>
+    </div>
+
+    <div class="sec" id="sec-settings">
+      <div class="setup-box">
+        <h3>Google Sheets 網址</h3>
+        <p>更改資料來源，或重新載入最新單字。</p>
+        <div class="irow">
+          <input type="url" id="sheetUrl2" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv">
+          <button class="btn btn-ink" onclick="saveSheet2()">更新</button>
+        </div>
+        <div class="astatus" id="sheetStatus2"></div>
+        <br>
+        <button class="btn btn-soft" onclick="reloadData()">↻ 重新載入單字</button>
+      </div>
+    </div>
   </div>
 
-  <div class="sec" id="sec-bank">
-    <div class="box" style="margin-bottom:12px">
-      <input type="text" id="search" placeholder="搜尋單字或中文..." oninput="renderBank()">
-    </div>
-    <div id="bank-list"></div>
+  <div id="loading-section" style="display:none">
+    <div class="loading"><div class="spin"></div>載入單字中...</div>
+  </div>
+  <div id="error-section" style="display:none">
+    <div class="err-box" id="err-msg"></div>
   </div>
 </div>
+
 <script>
-const vocab = [
-  {word:"curl",pos:"動詞/名詞",kk:"/kɜrl/",chinese:"捲曲",is_spoken:true,spoken_alternative:"",example:"She likes to **curl** up on the sofa with a good book on rainy days. （她喜歡在下雨天蜷縮在沙發上看書。）"},
-  {word:"complimentary",pos:"形容詞",kk:"/ˌkɑmplɪˈmɛntərɪ/",chinese:"免費的；讚美的",is_spoken:false,spoken_alternative:"free（免費）或 nice（讚美時）",example:"The hotel offered **complimentary** breakfast to all guests during the holiday season. （飯店在假期間提供所有住客免費早餐。）"},
-  {word:"vague",pos:"形容詞",kk:"/veɡ/",chinese:"模糊的",is_spoken:true,spoken_alternative:"",example:"His instructions were so **vague** that nobody knew what to do next. （他的指示太模糊了，沒有人知道接下來該怎麼做。）"},
-  {word:"reluctant",pos:"形容詞",kk:"/rɪˈlʌktənt/",chinese:"不情願的",is_spoken:true,spoken_alternative:"",example:"She was **reluctant** to admit she had made a mistake in front of everyone. （她不情願在眾人面前承認自己犯了錯。）"},
-  {word:"prevent",pos:"動詞",kk:"/prɪˈvɛnt/",chinese:"阻止",is_spoken:true,spoken_alternative:"",example:"Wearing sunscreen can **prevent** serious skin damage caused by UV rays. （塗防曬乳可以防止紫外線造成的嚴重皮膚傷害。）"},
-  {word:"withdraw",pos:"動詞",kk:"/wɪðˈdrɔ/",chinese:"撤回；提款",is_spoken:true,spoken_alternative:"",example:"He decided to **withdraw** his application after receiving a better job offer. （他在收到更好的工作邀約後決定撤回申請。）"},
-  {word:"diminish",pos:"動詞",kk:"/dɪˈmɪnɪʃ/",chinese:"減少；削弱",is_spoken:false,spoken_alternative:"reduce 或 go down（口語常用）",example:"Nothing could **diminish** her enthusiasm for learning new languages. （沒有什麼能削弱她學習新語言的熱情。）"},
-  {word:"terminate",pos:"動詞",kk:"/ˈtɜrmɪˌnet/",chinese:"終止",is_spoken:false,spoken_alternative:"end 或 stop（口語常用）",example:"The company decided to **terminate** the contract due to repeated delays. （公司因為一再延誤決定終止合約。）"},
-  {word:"formerly",pos:"副詞",kk:"/ˈfɔrmərlɪ/",chinese:"以前",is_spoken:false,spoken_alternative:"used to be / before（口語常用）",example:"The building was **formerly** a factory before it was converted into apartments. （這棟建築以前是工廠，後來被改建成公寓。）"},
-  {word:"tailor",pos:"動詞/名詞",kk:"/ˈtelɚ/",chinese:"量身訂製",is_spoken:true,spoken_alternative:"",example:"A good teacher will **tailor** lessons to match each student's learning style. （好老師會根據每位學生的學習風格量身訂製課程。）"},
-  {word:"favored",pos:"形容詞",kk:"/ˈfevɚd/",chinese:"受青睞的",is_spoken:true,spoken_alternative:"",example:"This café is a **favored** spot among locals for its relaxed atmosphere. （這家咖啡廳因輕鬆的氛圍而深受當地人喜愛。）"},
-  {word:"unanimous",pos:"形容詞",kk:"/juˈnænɪməs/",chinese:"全體一致的",is_spoken:false,spoken_alternative:"everyone agreed（口語常用）",example:"The committee reached a **unanimous** decision to approve the new budget. （委員會全體一致通過了新的預算案。）"},
-  {word:"counterpart",pos:"名詞",kk:"/ˈkaʊntɚˌpɑrt/",chinese:"對應的人或物",is_spoken:false,spoken_alternative:"opposite number 或 equivalent（口語可用）",example:"She met her **counterpart** from the partner company to discuss the merger. （她與合作公司的對應負責人會面討論合併事宜。）"},
-  {word:"suspect",pos:"動詞/名詞",kk:"/səˈspɛkt/",chinese:"懷疑；嫌疑人",is_spoken:true,spoken_alternative:"",example:"I **suspect** the delay was caused by a miscommunication between the teams. （我懷疑延誤是因為團隊之間溝通不良所造成的。）"},
-  {word:"heir",pos:"名詞",kk:"/ɛr/",chinese:"繼承人",is_spoken:false,spoken_alternative:"the one who inherits（口語說法）",example:"As the eldest child, she was considered the natural **heir** to the family business. （作為長子，她被視為家族事業的天然繼承人。）"},
-  {word:"fascinate",pos:"動詞",kk:"/ˈfæsɪˌnet/",chinese:"使著迷",is_spoken:true,spoken_alternative:"",example:"The deep-sea documentary never fails to **fascinate** me with its stunning footage. （這部深海紀錄片每次都用驚人的畫面讓我著迷。）"},
-  {word:"conservative",pos:"形容詞",kk:"/kənˈsɜrvətɪv/",chinese:"保守的",is_spoken:true,spoken_alternative:"",example:"His **conservative** investment approach helped him stay stable during market downturns. （他保守的投資方式幫助他在市場下跌時保持穩定。）"},
-  {word:"availability",pos:"名詞",kk:"/əˌveləˈbɪlɪtɪ/",chinese:"可用性",is_spoken:false,spoken_alternative:"when you're free（口語常用）",example:"Please confirm your **availability** for the meeting scheduled for next Tuesday. （請確認你下週二會議的出席時間是否方便。）"},
-  {word:"numerical",pos:"形容詞",kk:"/njuˈmɛrɪkl/",chinese:"數字的",is_spoken:false,spoken_alternative:"number-based（口語說法）",example:"The report includes a **numerical** breakdown of sales performance by region. （報告包含各地區業績的數字細項分析。）"},
-  {word:"deficit",pos:"名詞",kk:"/ˈdɛfɪsɪt/",chinese:"赤字；不足",is_spoken:false,spoken_alternative:"shortfall 或 gap（口語可用）",example:"The city's budget **deficit** forced officials to cut spending on public services. （城市的預算赤字迫使官員削減公共服務支出。）"},
-  {word:"ultimately",pos:"副詞",kk:"/ˈʌltɪmɪtlɪ/",chinese:"最終",is_spoken:true,spoken_alternative:"",example:"**Ultimately**, success in any skill comes down to consistent daily practice. （最終，任何技能的成功都取決於持續的日常練習。）"},
-  {word:"whereas",pos:"連接詞",kk:"/wɛrˈæz/",chinese:"然而；鑒於",is_spoken:false,spoken_alternative:"but / while（口語常用）",example:"She prefers mornings, **whereas** her partner is most productive late at night. （她偏好早晨，而她的伴侶在深夜時效率最高。）"},
-  {word:"eagerly",pos:"副詞",kk:"/ˈiɡɚlɪ/",chinese:"熱切地",is_spoken:true,spoken_alternative:"",example:"The children gathered **eagerly** around the storyteller, excited to hear more. （孩子們熱切地聚集在說故事者身邊，迫不及待地想聽更多。）"},
-  {word:"obstacle",pos:"名詞",kk:"/ˈɑbstɪkl/",chinese:"障礙",is_spoken:true,spoken_alternative:"",example:"Language barriers can be a significant **obstacle** for immigrants seeking employment. （語言障礙對尋求就業的移民來說可能是一大阻礙。）"},
-  {word:"decent",pos:"形容詞",kk:"/ˈdisnt/",chinese:"像樣的；體面的",is_spoken:true,spoken_alternative:"",example:"Even a **decent** night's sleep can dramatically improve your mood the next day. （哪怕只是一個像樣的夜晚睡眠也能大幅改善隔天的心情。）"},
-  {word:"constitute",pos:"動詞",kk:"/ˈkɑnstɪˌtjut/",chinese:"構成",is_spoken:false,spoken_alternative:"make up 或 count as（口語常用）",example:"Three hours of daily practice can **constitute** a solid foundation for fluency. （每天三小時的練習可以構成流利度的扎實基礎。）"},
-  {word:"accommodate",pos:"動詞",kk:"/əˈkɑməˌdet/",chinese:"容納；遷就",is_spoken:false,spoken_alternative:"fit 或 work with（口語常用）",example:"The venue can **accommodate** up to 500 guests, making it perfect for large events. （這個場地最多可容納500位賓客，非常適合大型活動。）"},
-  {word:"esteem",pos:"名詞/動詞",kk:"/ɪˈstim/",chinese:"尊重",is_spoken:false,spoken_alternative:"respect（口語常用）",example:"She is held in high **esteem** by her peers for her integrity and leadership. （她因誠信和領導力而深受同儕尊重。）"},
-  {word:"engrave",pos:"動詞",kk:"/ɪnˈɡrev/",chinese:"刻；銘刻",is_spoken:false,spoken_alternative:"carve 或 write on（口語說法）",example:"He chose to **engrave** a personal message on the back of the watch as a gift. （他選擇在手錶背面刻上一段私人訊息作為禮物。）"},
-  {word:"complicated",pos:"形容詞",kk:"/ˈkɑmplɪˌketɪd/",chinese:"複雜的",is_spoken:true,spoken_alternative:"",example:"The visa application process is surprisingly **complicated** without the right documents. （沒有正確文件的話，簽證申請流程出奇地複雜。）"},
-  {word:"proposal",pos:"名詞",kk:"/prəˈpozl/",chinese:"提案；求婚",is_spoken:true,spoken_alternative:"",example:"The team submitted a detailed **proposal** outlining the projected costs and timeline. （團隊提交了一份詳細的提案，概述了預估費用和時程。）"},
-  {word:"frustrated",pos:"形容詞",kk:"/ˈfrʌstˌretɪd/",chinese:"沮喪的",is_spoken:true,spoken_alternative:"",example:"He felt **frustrated** when his well-researched suggestions were repeatedly ignored. （當他精心研究的建議一再被忽視時，他感到非常沮喪。）"},
-  {word:"particular",pos:"形容詞",kk:"/pɚˈtɪkjəlɚ/",chinese:"特定的；挑剔的",is_spoken:true,spoken_alternative:"",example:"She is very **particular** about how her desk is organized, down to every last detail. （她對桌子的整理方式非常挑剔，連每個細節都不放過。）"},
-  {word:"commercial",pos:"形容詞/名詞",kk:"/kəˈmɜrʃl/",chinese:"商業的",is_spoken:true,spoken_alternative:"",example:"The artist's move into **commercial** work allowed her to fund her personal projects. （這位藝術家轉向商業工作讓她能夠資助自己的個人計畫。）"},
-  {word:"merchandise",pos:"名詞",kk:"/ˈmɜrtʃənˌdaɪz/",chinese:"商品",is_spoken:false,spoken_alternative:"stuff 或 products（口語常用）",example:"The official **merchandise** sold at the concert included T-shirts and limited edition posters. （演唱會上販售的官方商品包括T恤和限量版海報。）"},
-  {word:"suppose",pos:"動詞",kk:"/səˈpoz/",chinese:"假設；猜想",is_spoken:true,spoken_alternative:"",example:"I **suppose** we could take the scenic route since we're not in a hurry. （我想我們可以走風景路線，反正我們不趕時間。）"},
-  {word:"previous",pos:"形容詞",kk:"/ˈpriviəs/",chinese:"之前的",is_spoken:true,spoken_alternative:"",example:"Her **previous** experience in marketing gave her an edge when applying for the role. （她之前的行銷經驗讓她在申請這個職位時更具優勢。）"},
-  {word:"undeniably",pos:"副詞",kk:"/ˌʌndɪˈnaɪəblɪ/",chinese:"不可否認地",is_spoken:false,spoken_alternative:"there's no doubt that（口語說法）",example:"The film is **undeniably** one of the most impactful documentaries of the past decade. （這部電影無可否認地是過去十年最具影響力的紀錄片之一。）"},
-  {word:"rightful",pos:"形容詞",kk:"/ˈraɪtfəl/",chinese:"合法的；正當的",is_spoken:false,spoken_alternative:"real 或 true（口語可用）",example:"After years of legal battles, she was recognized as the **rightful** owner of the estate. （經過多年的法律糾紛，她終於被承認為這份遺產的合法擁有者。）"},
-  {word:"refine",pos:"動詞",kk:"/rɪˈfaɪn/",chinese:"精煉；改善",is_spoken:false,spoken_alternative:"improve 或 polish（口語常用）",example:"She took extra time to **refine** her presentation, removing anything repetitive or unclear. （她花了額外的時間改善她的簡報，去除任何重複或不清楚的部分。）"},
-  {word:"deposited",pos:"動詞",kk:"/dɪˈpɑzɪtɪd/",chinese:"存放；沉積",is_spoken:false,spoken_alternative:"put in 或 dropped off（口語說法）",example:"The funds were **deposited** into the company account the same day the invoice was approved. （發票被核准的當天，款項就存入了公司帳戶。）"},
-  {word:"exchange",pos:"動詞/名詞",kk:"/ɪksˈtʃendʒ/",chinese:"交換；兌換",is_spoken:true,spoken_alternative:"",example:"The program allows students to **exchange** ideas with peers from around the world. （這個計畫讓學生能與世界各地的同伴交流想法。）"},
-  {word:"mutual",pos:"形容詞",kk:"/ˈmjutʃuəl/",chinese:"相互的",is_spoken:true,spoken_alternative:"",example:"The partnership was built on **mutual** trust and a shared commitment to quality. （這份合作關係建立在相互信任和對品質的共同承諾之上。）"},
-  {word:"excursion",pos:"名詞",kk:"/ɪkˈskɜrʒən/",chinese:"短途旅行",is_spoken:false,spoken_alternative:"trip 或 day out（口語常用）",example:"The school organized a weekend **excursion** to a nearby nature reserve for the students. （學校為學生安排了一次前往附近自然保護區的週末短途旅行。）"},
-  {word:"interact",pos:"動詞",kk:"/ˌɪntɚˈækt/",chinese:"互動",is_spoken:true,spoken_alternative:"",example:"Students learn more effectively when they actively **interact** with their instructors. （學生在與老師積極互動時學習效果更好。）"},
-  {word:"forecast",pos:"動詞/名詞",kk:"/ˈfɔrˌkæst/",chinese:"預測；預報",is_spoken:true,spoken_alternative:"",example:"The economic **forecast** suggests moderate growth in the technology sector next quarter. （經濟預測顯示科技業下季將有溫和成長。）"},
-  {word:"perform",pos:"動詞",kk:"/pɚˈfɔrm/",chinese:"執行；表演",is_spoken:true,spoken_alternative:"",example:"The surgeon was expected to **perform** the procedure with precision under time pressure. （外科醫生被期望在時間壓力下精確地執行手術。）"},
-  {word:"dispatch",pos:"動詞/名詞",kk:"/dɪˈspætʃ/",chinese:"派遣；發送",is_spoken:false,spoken_alternative:"send out（口語常用）",example:"The manager **dispatched** a team immediately after receiving the urgent report. （經理在收到緊急報告後立即派出一個團隊。）"},
-  {word:"ideal",pos:"形容詞/名詞",kk:"/aɪˈdiəl/",chinese:"理想的",is_spoken:true,spoken_alternative:"",example:"A quiet morning routine with light exercise is my **ideal** way to start the day. （安靜的早晨例行公事加上輕度運動是我理想的一天開始方式。）"},
-  {word:"incident",pos:"名詞",kk:"/ˈɪnsɪdənt/",chinese:"事件；事故",is_spoken:true,spoken_alternative:"",example:"The security team responded quickly to the **incident** and ensured everyone was safe. （安全團隊對事件迅速反應，確保所有人安全。）"},
-  {word:"generosity",pos:"名詞",kk:"/ˌdʒɛnɚˈɑsɪtɪ/",chinese:"慷慨",is_spoken:false,spoken_alternative:"kindness（口語可用）",example:"Her **generosity** during the fundraiser inspired dozens of others to contribute. （她在募款活動中的慷慨激勵了數十人一同捐款。）"},
-  {word:"gratitude",pos:"名詞",kk:"/ˈɡrætɪˌtud/",chinese:"感謝",is_spoken:false,spoken_alternative:"thankfulness 或 appreciation（口語可用）",example:"He expressed deep **gratitude** to everyone who had supported him through the difficult time. （他對所有在困難時期支持他的人表達了深深的感謝。）"},
-  {word:"praise",pos:"動詞/名詞",kk:"/prez/",chinese:"讚揚",is_spoken:true,spoken_alternative:"",example:"The teacher made a point to **praise** students not just for results but for their effort. （老師特別讚揚學生不只是因為成果，也因為他們的努力。）"},
-  {word:"subordinate",pos:"名詞/形容詞",kk:"/səˈbɔrdɪnɪt/",chinese:"下屬；下級",is_spoken:false,spoken_alternative:"someone who works under you（口語說法）",example:"A good leader treats every **subordinate** with respect, regardless of their position. （好的領導者尊重每一位下屬，不論其職位高低。）"},
-  {word:"setback",pos:"名詞",kk:"/ˈsɛtˌbæk/",chinese:"挫折；倒退",is_spoken:true,spoken_alternative:"",example:"Losing that client was a major **setback**, but the team used it as motivation to improve. （失去那個客戶是一大挫折，但團隊將其作為改進的動力。）"},
-  {word:"conform",pos:"動詞",kk:"/kənˈfɔrm/",chinese:"遵從；順應",is_spoken:false,spoken_alternative:"go along with 或 fit in（口語常用）",example:"New employees are expected to **conform** to the company's code of conduct from day one. （新員工從第一天起就要遵守公司的行為準則。）"},
-  {word:"contingency",pos:"名詞",kk:"/kənˈtɪndʒənsɪ/",chinese:"應急措施",is_spoken:false,spoken_alternative:"backup plan（口語常用）",example:"The project included a **contingency** budget in case unexpected costs arose. （專案中包含了一筆應急預算，以備不時之需。）"},
-  {word:"profoundly",pos:"副詞",kk:"/prəˈfaʊndlɪ/",chinese:"深刻地",is_spoken:false,spoken_alternative:"deeply（口語常用）",example:"The experience of living abroad **profoundly** changed her perspective on culture and identity. （海外生活的經歷深刻地改變了她對文化和身份認同的看法。）"},
-  {word:"densely",pos:"副詞",kk:"/ˈdɛnslɪ/",chinese:"稠密地",is_spoken:false,spoken_alternative:"closely packed（口語說法）",example:"The old city center is **densely** packed with historic buildings and narrow alleyways. （老城區密集地布滿了歷史建築和狹窄的小巷。）"},
-  {word:"compatibility",pos:"名詞",kk:"/kəmˌpætɪˈbɪlɪtɪ/",chinese:"相容性",is_spoken:false,spoken_alternative:"how well things work together（口語說法）",example:"Before choosing software, check its **compatibility** with your current operating system. （選擇軟體之前，請檢查其與您目前作業系統的相容性。）"},
-  {word:"eligible",pos:"形容詞",kk:"/ˈɛlɪdʒɪbl/",chinese:"有資格的",is_spoken:false,spoken_alternative:"qualified 或 allowed to（口語常用）",example:"Employees who have worked here for over a year are **eligible** to apply for promotion. （在此工作超過一年的員工有資格申請晉升。）"},
-  {word:"trial",pos:"名詞",kk:"/ˈtraɪəl/",chinese:"試驗；審判",is_spoken:true,spoken_alternative:"",example:"We offer a 14-day free **trial** so customers can try the product before committing. （我們提供14天免費試用，讓客戶在承諾購買前可以試用產品。）"},
-  {word:"contrary",pos:"形容詞/名詞",kk:"/ˈkɑntrɛrɪ/",chinese:"相反的",is_spoken:false,spoken_alternative:"opposite（口語常用）",example:"**Contrary** to popular belief, multitasking often makes people less productive overall. （與普遍看法相反，多工處理往往讓人整體效率更低。）"},
-  {word:"temptation",pos:"名詞",kk:"/tɛmpˈteʃən/",chinese:"誘惑",is_spoken:true,spoken_alternative:"",example:"The **temptation** to check my phone during meetings is something I constantly struggle with. （在會議中查看手機的誘惑是我一直在努力克服的事。）"},
-  {word:"obscure",pos:"形容詞/動詞",kk:"/əbˈskjʊr/",chinese:"晦澀的；遮蔽",is_spoken:false,spoken_alternative:"unclear 或 hide（口語常用）",example:"The instructions were so **obscure** that even experienced users needed assistance. （說明書太晦澀了，就連有經驗的用戶也需要協助。）"},
-  {word:"strikingly",pos:"副詞",kk:"/ˈstraɪkɪŋlɪ/",chinese:"引人注目地",is_spoken:false,spoken_alternative:"really noticeably（口語說法）",example:"The two sisters look **strikingly** similar despite being born three years apart. （這對姐妹儘管相差三歲，但長得出奇地相似。）"},
-  {word:"reimbursement",pos:"名詞",kk:"/ˌriɪmˈbɜrsmənt/",chinese:"報銷；償還",is_spoken:false,spoken_alternative:"getting your money back（口語說法）",example:"Submit your receipts within 30 days to ensure prompt **reimbursement** of travel expenses. （在30天內提交收據以確保及時報銷差旅費用。）"},
-  {word:"quantitative",pos:"形容詞",kk:"/ˈkwɑntɪˌtetɪv/",chinese:"量化的",is_spoken:false,spoken_alternative:"numbers-based（口語說法）",example:"The study used **quantitative** data from surveys to measure changes in satisfaction. （這項研究使用問卷調查的量化數據來衡量滿意度的變化。）"},
-  {word:"tentative",pos:"形容詞",kk:"/ˈtɛntətɪv/",chinese:"暫定的；試探性的",is_spoken:false,spoken_alternative:"not final 或 not sure yet（口語說法）",example:"We have a **tentative** schedule for the launch, but details may still change. （我們有一個暫定的發布時程，但細節可能仍會改變。）"},
-  {word:"substantive",pos:"形容詞",kk:"/ˈsʌbstəntɪv/",chinese:"實質性的",is_spoken:false,spoken_alternative:"meaningful 或 real（口語常用）",example:"After weeks of discussion, the negotiation finally led to **substantive** progress. （經過數週的討論，談判終於取得了實質性進展。）"},
-  {word:"chronic",pos:"形容詞",kk:"/ˈkrɑnɪk/",chinese:"慢性的；長期的",is_spoken:true,spoken_alternative:"",example:"**Chronic** stress can seriously weaken the immune system over time. （長期壓力久而久之會嚴重削弱免疫系統。）"},
-  {word:"redeemable",pos:"形容詞",kk:"/rɪˈdimɪbl/",chinese:"可兌換的；可補救的",is_spoken:false,spoken_alternative:"can be used（口語說法）",example:"This voucher is **redeemable** at any of our partner stores before the end of the year. （此兌換券可在年底前於任何合作門市使用。）"},
-  {word:"extensive",pos:"形容詞",kk:"/ɪkˈstɛnsɪv/",chinese:"廣泛的",is_spoken:false,spoken_alternative:"a lot of 或 thorough（口語常用）",example:"The researcher conducted an **extensive** review of over 200 studies before drawing conclusions. （研究人員在得出結論之前對200多項研究進行了廣泛審查。）"},
-  {word:"notably",pos:"副詞",kk:"/ˈnotəblɪ/",chinese:"尤其；顯著地",is_spoken:false,spoken_alternative:"especially（口語常用）",example:"Several improvements were made, **notably** the addition of a new customer feedback system. （進行了幾項改善，尤其是新增了客戶回饋系統。）"},
-  {word:"assessment",pos:"名詞",kk:"/əˈsɛsmənt/",chinese:"評估",is_spoken:false,spoken_alternative:"evaluation 或 check（口語常用）",example:"A thorough risk **assessment** was completed before the team agreed to proceed. （在團隊同意繼續之前，進行了徹底的風險評估。）"},
-  {word:"relief",pos:"名詞",kk:"/rɪˈlif/",chinese:"寬慰；救濟",is_spoken:true,spoken_alternative:"",example:"There was a collective sigh of **relief** when the rescue team confirmed everyone was safe. （當救援團隊確認所有人安全時，大家集體鬆了一口氣。）"},
-  {word:"identify",pos:"動詞",kk:"/aɪˈdɛntɪˌfaɪ/",chinese:"識別；找出",is_spoken:true,spoken_alternative:"",example:"The goal is to **identify** the root cause of the problem before proposing solutions. （目標是在提出解決方案之前找出問題的根本原因。）"},
-  {word:"impose",pos:"動詞",kk:"/ɪmˈpoz/",chinese:"強加；施加",is_spoken:false,spoken_alternative:"force on（口語常用）",example:"The new regulations will **impose** stricter environmental standards on all manufacturers. （新法規將對所有製造商強制實施更嚴格的環境標準。）"},
-  {word:"exempt",pos:"形容詞/動詞",kk:"/ɪɡˈzɛmpt/",chinese:"豁免的",is_spoken:false,spoken_alternative:"not required to / doesn't apply to（口語說法）",example:"Non-profit organizations are often **exempt** from paying certain local taxes. （非營利組織通常免繳某些地方稅。）"},
-  {word:"throughout",pos:"介系詞/副詞",kk:"/θruˈaʊt/",chinese:"遍及；自始至終",is_spoken:true,spoken_alternative:"",example:"Safety protocols must be maintained **throughout** the entire construction process. （在整個建設過程中必須始終遵守安全規程。）"},
-  {word:"prominent",pos:"形容詞",kk:"/ˈprɑmɪnənt/",chinese:"顯著的；重要的",is_spoken:false,spoken_alternative:"well-known 或 big（口語常用）",example:"She played a **prominent** role in shaping the company's strategy for Asian markets. （她在制定公司亞洲市場策略方面發揮了重要作用。）"},
-  {word:"concise",pos:"形容詞",kk:"/kənˈsaɪs/",chinese:"簡潔的",is_spoken:false,spoken_alternative:"short and clear（口語說法）",example:"A **concise** email is always more effective than a long one full of unnecessary details. （簡潔的電子郵件總是比充滿不必要細節的長篇郵件更有效。）"},
-  {word:"gracious",pos:"形容詞",kk:"/ˈɡreʃəs/",chinese:"和藹的；有禮的",is_spoken:false,spoken_alternative:"kind（口語常用）",example:"Despite her success, she remained **gracious** and always made time for newcomers. （儘管成功，她仍然和藹可親，總是抽時間關照新人。）"},
-  {word:"centralized",pos:"形容詞",kk:"/ˈsɛntrəˌlaɪzd/",chinese:"集中化的",is_spoken:false,spoken_alternative:"all in one place（口語說法）",example:"The company switched to a **centralized** data system to improve efficiency and security. （公司轉向集中化的數據系統以提高效率和安全性。）"},
-  {word:"distinct",pos:"形容詞",kk:"/dɪˈstɪŋkt/",chinese:"明顯的；獨特的",is_spoken:false,spoken_alternative:"different 或 clear（口語常用）",example:"Each department had a **distinct** culture that made cross-team collaboration challenging. （每個部門都有獨特的文化，使跨團隊合作頗具挑戰性。）"},
-  {word:"blindly",pos:"副詞",kk:"/ˈblaɪndlɪ/",chinese:"盲目地",is_spoken:true,spoken_alternative:"",example:"Following instructions **blindly** without understanding the reasoning can lead to costly mistakes. （盲目地遵循指示而不理解其原因可能導致代價高昂的錯誤。）"},
-  {word:"waive",pos:"動詞",kk:"/wev/",chinese:"放棄；豁免",is_spoken:false,spoken_alternative:"let go of 或 drop（口語常用）",example:"Management agreed to **waive** the cancellation fee given the customer's circumstances. （管理層同意鑑於客戶的情況免除取消費用。）"},
-  {word:"tenancy",pos:"名詞",kk:"/ˈtɛnənsɪ/",chinese:"租用；租期",is_spoken:false,spoken_alternative:"rental（口語常用）",example:"Her **tenancy** agreement clearly stated that pets were not allowed in the building. （她的租約中明確規定建築物內不允許飼養寵物。）"},
-  {word:"commitment",pos:"名詞",kk:"/kəˈmɪtmənt/",chinese:"承諾；投入",is_spoken:true,spoken_alternative:"",example:"His **commitment** to improving his English was evident from the hours he put in daily. （他每天投入的時間充分顯示了他對提升英語的承諾。）"},
-  {word:"relatively",pos:"副詞",kk:"/ˈrɛlətɪvlɪ/",chinese:"相對地",is_spoken:true,spoken_alternative:"",example:"The new office is **relatively** close to the metro, making the commute convenient. （新辦公室距地鐵相對較近，通勤十分方便。）"},
-  {word:"labor",pos:"名詞/動詞",kk:"/ˈlebɚ/",chinese:"勞動；費力",is_spoken:true,spoken_alternative:"",example:"The success of the project was a result of months of dedicated **labor** by the whole team. （這個專案的成功是整個團隊數月辛勤勞動的成果。）"},
-  {word:"bumps",pos:"名詞",kk:"/bʌmps/",chinese:"顛簸；困難",is_spoken:true,spoken_alternative:"",example:"Every new business goes through **bumps** in the early stages, but resilience is what matters. （每家新企業在早期階段都會遭遇困難，但韌性才是最重要的。）"},
-  {word:"readily",pos:"副詞",kk:"/ˈrɛdɪlɪ/",chinese:"輕易地；樂意地",is_spoken:true,spoken_alternative:"",example:"She **readily** admitted her mistake and immediately proposed a plan to fix it. （她輕易地承認了自己的錯誤，並立即提出了修正計劃。）"},
-  {word:"upscale",pos:"形容詞",kk:"/ˈʌpˌskel/",chinese:"高檔的",is_spoken:true,spoken_alternative:"",example:"The restaurant underwent renovations to reposition itself as an **upscale** dining destination. （這家餐廳進行了翻新，以重新定位自己為高檔餐飲目的地。）"},
-  {word:"endorse",pos:"動詞",kk:"/ɪnˈdɔrs/",chinese:"認可；代言",is_spoken:false,spoken_alternative:"support 或 back（口語常用）",example:"Several high-profile athletes were recruited to **endorse** the brand's new collection. （幾位知名運動員被招募來代言該品牌的新系列。）"},
-  {word:"curious",pos:"形容詞",kk:"/ˈkjʊrɪəs/",chinese:"好奇的",is_spoken:true,spoken_alternative:"",example:"She was **curious** about the culture long before she had the chance to visit the country. （她在有機會造訪那個國家之前，就已對其文化充滿好奇。）"},
-  {word:"engagement",pos:"名詞",kk:"/ɪnˈɡedʒmənt/",chinese:"參與；婚約",is_spoken:true,spoken_alternative:"",example:"Posts with storytelling consistently drive higher **engagement** than product-only content. （有故事性的貼文始終比純產品內容獲得更高的互動率。）"},
-  {word:"desirable",pos:"形容詞",kk:"/dɪˈzaɪrɪbl/",chinese:"令人嚮往的",is_spoken:false,spoken_alternative:"attractive 或 great to have（口語說法）",example:"Fluency in more than one language is a highly **desirable** skill in the global job market. （掌握多種語言的流利度是全球就業市場中非常令人嚮往的技能。）"},
-  {word:"shortage",pos:"名詞",kk:"/ˈʃɔrtɪdʒ/",chinese:"短缺",is_spoken:true,spoken_alternative:"",example:"The global chip **shortage** disrupted production lines across the automotive industry. （全球晶片短缺擾亂了整個汽車行業的生產線。）"},
-  {word:"sneak",pos:"動詞",kk:"/snik/",chinese:"偷偷地做",is_spoken:true,spoken_alternative:"",example:"She tried to **sneak** a look at the answers, but the instructor was watching carefully. （她試圖偷看答案，但監考老師正在仔細觀察。）"},
-  {word:"blurry",pos:"形容詞",kk:"/ˈblɜrɪ/",chinese:"模糊的",is_spoken:true,spoken_alternative:"",example:"The photo was too **blurry** to use in the report, so they had to schedule a reshoot. （這張照片太模糊了，無法用於報告，所以他們不得不安排重拍。）"},
-  {word:"metaphor",pos:"名詞",kk:"/ˈmɛtəˌfɔr/",chinese:"比喻；隱喻",is_spoken:false,spoken_alternative:"comparison（口語可用）",example:"Using a **metaphor** makes abstract ideas more concrete and easier to understand. （使用比喻使抽象概念更具體，更容易理解。）"},
-  {word:"forgive",pos:"動詞",kk:"/fɚˈɡɪv/",chinese:"原諒",is_spoken:true,spoken_alternative:"",example:"Learning to **forgive** others—and yourself—is an essential part of emotional maturity. （學會原諒他人和自己是情感成熟的重要組成部分。）"},
-  {word:"grief",pos:"名詞",kk:"/ɡrif/",chinese:"悲傷；哀痛",is_spoken:true,spoken_alternative:"",example:"She channeled her **grief** into writing a memoir that helped thousands of readers heal. （她將悲傷轉化為寫作回憶錄，幫助了數千名讀者療癒。）"},
-  {word:"initially",pos:"副詞",kk:"/ɪˈnɪʃəlɪ/",chinese:"最初",is_spoken:true,spoken_alternative:"",example:"I was **initially** skeptical about the new system, but it quickly proved its worth. （我最初對新系統持懷疑態度，但它很快就證明了自己的價值。）"},
-  {word:"wobble",pos:"動詞/名詞",kk:"/ˈwɑbl/",chinese:"搖晃；不穩",is_spoken:true,spoken_alternative:"",example:"The table had a slight **wobble**, so they folded a napkin under one leg to fix it. （桌子有點晃動，所以他們在一條腿下折了一張餐巾紙來固定它。）"},
-  {word:"flop",pos:"動詞/名詞",kk:"/flɑp/",chinese:"失敗；撲倒",is_spoken:true,spoken_alternative:"",example:"Despite the huge budget, the film was a total **flop** at the box office. （儘管預算巨大，這部電影在票房上完全失敗了。）"},
-  {word:"frightened",pos:"形容詞",kk:"/ˈfraɪtnd/",chinese:"害怕的",is_spoken:true,spoken_alternative:"",example:"The child was **frightened** by the thunder but calmed down once held by her mother. （這個孩子被雷聲嚇到了，但被媽媽抱著後就平靜下來了。）"},
-  {word:"narrow",pos:"形容詞/動詞",kk:"/ˈnæro/",chinese:"狹窄的；縮小",is_spoken:true,spoken_alternative:"",example:"We need to **narrow** down the candidate list to the top three before interviews. （我們需要在面試前將候選人名單縮小到前三名。）"},
-  {word:"sluggish",pos:"形容詞",kk:"/ˈslʌɡɪʃ/",chinese:"遲緩的",is_spoken:true,spoken_alternative:"",example:"The app felt **sluggish** on older devices, so they prioritized performance improvements. （這款應用在舊設備上感覺遲緩，所以他們優先考慮效能改善。）"},
-  {word:"trapped",pos:"形容詞",kk:"/træpt/",chinese:"被困住的",is_spoken:true,spoken_alternative:"",example:"She felt **trapped** in a role that no longer aligned with her values or career goals. （她感到被困在一個不再符合她價值觀或職業目標的角色中。）"},
-  {word:"faintly",pos:"副詞",kk:"/ˈfentlɪ/",chinese:"微弱地",is_spoken:true,spoken_alternative:"",example:"She could **faintly** hear music drifting from the apartment next door late at night. （深夜她能微弱地聽到從隔壁公寓飄來的音樂。）"},
-  {word:"collateral",pos:"名詞/形容詞",kk:"/kəˈlætərəl/",chinese:"抵押品；附帶的",is_spoken:false,spoken_alternative:"something to back the loan（口語說法）",example:"The bank required property as **collateral** before approving the small business loan. （銀行在批准小企業貸款之前要求提供財產作為抵押品。）"},
-  {word:"suburb",pos:"名詞",kk:"/ˈsʌbɜrb/",chinese:"郊區",is_spoken:true,spoken_alternative:"",example:"Many young families settle in the **suburbs** for more affordable and spacious housing. （許多年輕家庭在郊區定居，以獲得更實惠和寬敞的住宅。）"},
-  {word:"lurk",pos:"動詞",kk:"/lɜrk/",chinese:"潛伏；徘徊",is_spoken:true,spoken_alternative:"",example:"Security experts warn that threats can **lurk** undetected in systems for months. （安全專家警告說，威脅可能在系統中潛伏數月而不被發現。）"},
-  {word:"improvise",pos:"動詞",kk:"/ˈɪmprəˌvaɪz/",chinese:"即興發揮",is_spoken:true,spoken_alternative:"",example:"When the projector broke, she had to **improvise** and deliver the presentation from memory. （當投影機壞掉時，她不得不即興發揮，憑記憶進行演講。）"},
-  {word:"interfere",pos:"動詞",kk:"/ˌɪntɚˈfɪr/",chinese:"干涉；妨礙",is_spoken:true,spoken_alternative:"",example:"It's important not to **interfere** in someone's personal decisions unless they ask. （除非對方要求，否則不要干涉他人的個人決定這一點很重要。）"},
-  {word:"brew",pos:"動詞/名詞",kk:"/bru/",chinese:"釀造；醞釀",is_spoken:true,spoken_alternative:"",example:"She could sense tension beginning to **brew** in the room long before anyone spoke up. （她能感覺到在任何人開口之前，房間裡的緊張氣氛就開始醞釀了。）"},
-  {word:"fabulous",pos:"形容詞",kk:"/ˈfæbjʊləs/",chinese:"極好的",is_spoken:true,spoken_alternative:"",example:"The interior design of the renovated hotel was simply **fabulous** — every room a masterpiece. （翻新後飯店的室內設計簡直太棒了，每個房間都是一件傑作。）"},
-  {word:"urge",pos:"動詞/名詞",kk:"/ɜrdʒ/",chinese:"催促；衝動",is_spoken:true,spoken_alternative:"",example:"His mentor continued to **urge** him to submit the manuscript even when doubt crept in. （即使疑慮漸生，他的導師仍繼續催促他提交手稿。）"},
-  {word:"outfit",pos:"名詞/動詞",kk:"/ˈaʊtˌfɪt/",chinese:"服裝；配備",is_spoken:true,spoken_alternative:"",example:"She chose a professional **outfit** that was both stylish and appropriate for the interview. （她選了一套既時尚又適合面試的專業服裝。）"},
-  {word:"splurge",pos:"動詞/名詞",kk:"/splɜrdʒ/",chinese:"揮霍；奢侈消費",is_spoken:true,spoken_alternative:"",example:"After months of saving, they decided to **splurge** on a dream vacation to Japan. （在幾個月的存錢之後，他們決定奢侈地去日本夢想之旅。）"},
-  {word:"naysayers",pos:"名詞",kk:"/ˈneˌseɪɚz/",chinese:"唱反調的人",is_spoken:true,spoken_alternative:"",example:"Despite the **naysayers**, the team pushed forward and achieved remarkable results. （儘管有人唱反調，團隊仍然堅持前進，取得了顯著成果。）"},
-  {word:"doubters",pos:"名詞",kk:"/ˈdaʊtɚz/",chinese:"懷疑者",is_spoken:true,spoken_alternative:"",example:"She proved the **doubters** wrong with a flawless performance on the biggest night. （她在最重要的夜晚用完美的表現證明了那些懷疑者是錯的。）"},
-  {word:"compete",pos:"動詞",kk:"/kəmˈpit/",chinese:"競爭",is_spoken:true,spoken_alternative:"",example:"To **compete** in today's job market, you must continuously update your skills. （要在當今的就業市場中競爭，你必須不斷更新自己的技能。）"},
-  {word:"caption",pos:"名詞/動詞",kk:"/ˈkæpʃən/",chinese:"標題；字幕",is_spoken:true,spoken_alternative:"",example:"Her post went viral thanks to a witty **caption** that perfectly matched the photo. （她的貼文因為一個與照片完美搭配的機智說明而廣泛傳播。）"},
-  {word:"convert",pos:"動詞/名詞",kk:"/kənˈvɜrt/",chinese:"轉換；改變",is_spoken:true,spoken_alternative:"",example:"They hired a contractor to **convert** the unused warehouse into a co-working space. （他們僱了一名承包商將閒置的倉庫改建成共用工作空間。）"},
-  {word:"recreation",pos:"名詞",kk:"/ˌrɛkrɪˈeʃən/",chinese:"娛樂；休閒",is_spoken:true,spoken_alternative:"",example:"The new park offers ample space for **recreation**, from picnics to outdoor concerts. （新公園提供了充足的休閒空間，從野餐到戶外音樂會應有盡有。）"},
-  {word:"wellness",pos:"名詞",kk:"/ˈwɛlnɪs/",chinese:"健康；養生",is_spoken:true,spoken_alternative:"",example:"More companies are investing in employee **wellness** programs to reduce burnout. （越來越多的公司投資於員工健康計劃以減少職業倦怠。）"},
-  {word:"plateau",pos:"名詞/動詞",kk:"/plæˈto/",chinese:"停滯期；高原",is_spoken:true,spoken_alternative:"",example:"After rapid improvement, her language skills hit a **plateau** and she needed new strategies. （在快速進步之後，她的語言技能遇到了停滯期，需要新的策略。）"},
-  {word:"designate",pos:"動詞/形容詞",kk:"/ˈdɛzɪɡˌnet/",chinese:"指定；任命",is_spoken:false,spoken_alternative:"pick 或 assign（口語常用）",example:"The manager was asked to **designate** a team leader before the project kickoff. （經理被要求在專案啟動前指定一名團隊領導人。）"},
-  {word:"verification",pos:"名詞",kk:"/ˌvɛrɪfɪˈkeʃən/",chinese:"驗證；確認",is_spoken:false,spoken_alternative:"confirmation 或 checking（口語說法）",example:"Two-factor **verification** adds an extra layer of security to your online accounts. （雙重驗證為您的線上帳戶增加了額外的安全層。）"},
-  {word:"instructor",pos:"名詞",kk:"/ɪnˈstrʌktɚ/",chinese:"教練；講師",is_spoken:true,spoken_alternative:"",example:"A great **instructor** knows how to adapt their teaching style to different learners. （優秀的教練知道如何調整自己的教學風格以適應不同的學習者。）"},
-  {word:"distinction",pos:"名詞",kk:"/dɪˈstɪŋkʃən/",chinese:"區別；榮譽",is_spoken:false,spoken_alternative:"difference 或 honor（口語常用）",example:"She graduated with **distinction**, a testament to her years of hard work and dedication. （她以優異成績畢業，這是她多年努力和奉獻的見證。）"},
-  {word:"intricate",pos:"形容詞",kk:"/ˈɪntrɪkɪt/",chinese:"錯綜複雜的",is_spoken:false,spoken_alternative:"complicated 或 detailed（口語常用）",example:"The **intricate** patterns in the architecture revealed extraordinary craftsmanship. （建築中錯綜複雜的圖案展現了非凡的工藝。）"},
-  {word:"sustain",pos:"動詞",kk:"/səˈsten/",chinese:"維持；支撐",is_spoken:false,spoken_alternative:"keep up 或 maintain（口語常用）",example:"It takes real discipline to **sustain** positive habits consistently over the long term. （長期持續保持積極習慣需要真正的自律。）"},
-  {word:"squeeze",pos:"動詞/名詞",kk:"/skwiz/",chinese:"擠壓；緊縮",is_spoken:true,spoken_alternative:"",example:"The economic downturn put a significant **squeeze** on small businesses everywhere. （經濟下滑對各地的小型企業造成了嚴重擠壓。）"},
-  {word:"compensate",pos:"動詞",kk:"/ˈkɑmpənˌset/",chinese:"補償；彌補",is_spoken:false,spoken_alternative:"make up for（口語常用）",example:"The airline offered vouchers to **compensate** passengers for the lengthy delay. （航空公司提供代金券補償乘客因長時間延誤所受的損失。）"},
-  {word:"selfish",pos:"形容詞",kk:"/ˈsɛlfɪʃ/",chinese:"自私的",is_spoken:true,spoken_alternative:"",example:"It's easy to seem **selfish** when protecting your boundaries, but the two are very different. （保護自己的界限時容易顯得自私，但兩者其實非常不同。）"},
-  {word:"pursuit",pos:"名詞",kk:"/pɚˈsut/",chinese:"追求；事業",is_spoken:false,spoken_alternative:"chase 或 going after（口語說法）",example:"The **pursuit** of excellence requires not just talent but relentless daily practice. （追求卓越不僅需要才能，還需要不懈的日常練習。）"},
-  {word:"plead",pos:"動詞",kk:"/plid/",chinese:"懇求；辯護",is_spoken:true,spoken_alternative:"",example:"She continued to **plead** with the committee to reconsider the cuts to arts funding. （她繼續懇求委員會重新考慮削減藝術資金的決定。）"},
-  {word:"bespoke",pos:"形容詞",kk:"/bɪˈspok/",chinese:"量身訂製的",is_spoken:false,spoken_alternative:"custom-made 或 custom（口語常用）",example:"The agency offered **bespoke** travel packages tailored to each client's unique interests. （該機構提供根據每位客戶獨特興趣量身訂製的旅遊套餐。）"},
-  {word:"composure",pos:"名詞",kk:"/kəmˈpoʒɚ/",chinese:"鎮定；沉著",is_spoken:false,spoken_alternative:"staying calm（口語說法）",example:"She maintained her **composure** throughout the intense negotiation session. （她在激烈的談判過程中始終保持鎮定。）"},
-  {word:"withstand",pos:"動詞",kk:"/wɪðˈstænd/",chinese:"承受；抵擋",is_spoken:false,spoken_alternative:"hold up against 或 survive（口語常用）",example:"The building was designed to **withstand** earthquakes of up to magnitude 7. （這棟建築設計可以承受高達7級的地震。）"},
-  {word:"optimal",pos:"形容詞",kk:"/ˈɑptɪməl/",chinese:"最佳的",is_spoken:false,spoken_alternative:"best（口語常用）",example:"For **optimal** performance, restart the system at least once a week. （為獲得最佳效能，請至少每週重新啟動系統一次。）"},
-  {word:"narrate",pos:"動詞",kk:"/ˈnæret/",chinese:"敘述；旁白",is_spoken:false,spoken_alternative:"tell 或 describe（口語常用）",example:"He was asked to **narrate** the documentary because of his calm, authoritative voice. （他因為平靜而權威的聲音被邀請為紀錄片配旁白。）"},
-  {word:"conjunction",pos:"名詞",kk:"/kənˈdʒʌŋkʃən/",chinese:"連詞；聯合",is_spoken:false,spoken_alternative:"together with（口語說法）",example:"The campaign succeeded in **conjunction** with a strong social media and PR strategy. （這次活動結合強大的社群媒體和公關策略而取得了成功。）"},
-  {word:"meditate",pos:"動詞",kk:"/ˈmɛdɪˌtet/",chinese:"冥想；沉思",is_spoken:true,spoken_alternative:"",example:"She starts every morning by taking ten minutes to **meditate** before checking her phone. （她每天早上先花十分鐘冥想，然後再看手機。）"},
-  {word:"stronghold",pos:"名詞",kk:"/ˈstrɔŋˌhold/",chinese:"據點；堡壘",is_spoken:false,spoken_alternative:"base 或 hub（口語常用）",example:"The city became a cultural **stronghold** for immigrant communities preserving their traditions. （這座城市成為移民社群保存傳統文化的堡壘。）"},
-  {word:"cocky",pos:"形容詞",kk:"/ˈkɑkɪ/",chinese:"自大的",is_spoken:true,spoken_alternative:"",example:"His **cocky** attitude during the interview made a poor impression despite his qualifications. （儘管他資歷不錯，但面試時自大的態度卻留下了不好的印象。）"},
-  {word:"redeem",pos:"動詞",kk:"/rɪˈdim/",chinese:"兌換；補救",is_spoken:true,spoken_alternative:"",example:"He worked hard to **redeem** himself after the embarrassing mistake by delivering great results. （他努力工作，在令人尷尬的失誤後用出色的成果來補救自己。）"},
-  {word:"instill",pos:"動詞",kk:"/ɪnˈstɪl/",chinese:"灌輸；逐漸培養",is_spoken:false,spoken_alternative:"teach 或 build up（口語常用）",example:"Parents play a crucial role in **instilling** values like honesty and empathy in children. （父母在向孩子灌輸誠實和同理心等價值觀方面扮演著關鍵角色。）"},
-  {word:"embedded",pos:"形容詞",kk:"/ɪmˈbɛdɪd/",chinese:"嵌入的；根深蒂固的",is_spoken:false,spoken_alternative:"built into 或 deeply rooted（口語說法）",example:"The belief that success requires suffering is deeply **embedded** in many work cultures. （成功需要吃苦的觀念在許多工作文化中根深蒂固。）"},
-  {word:"correspond",pos:"動詞",kk:"/ˌkɔrɪˈspɑnd/",chinese:"對應；通信",is_spoken:false,spoken_alternative:"match up 或 line up（口語常用）",example:"The actual expenses didn't **correspond** to the original budget, triggering a review. （實際費用與原始預算不符，引發了一次審查。）"},
-  {word:"sentiment",pos:"名詞",kk:"/ˈsɛntɪmənt/",chinese:"情感；看法",is_spoken:false,spoken_alternative:"feeling 或 vibe（口語常用）",example:"The general **sentiment** among employees was that the new policy was fair but poorly communicated. （員工的普遍看法是新政策是公平的，但溝通不足。）"},
-  {word:"accord",pos:"名詞/動詞",kk:"/əˈkɔrd/",chinese:"協議；符合",is_spoken:false,spoken_alternative:"agreement 或 deal（口語常用）",example:"The two nations signed an **accord** to reduce carbon emissions by 30% over the next decade. （兩國簽署了一項協議，將在未來十年內將碳排放量減少30%。）"},
-  {word:"nitpick",pos:"動詞",kk:"/ˈnɪtˌpɪk/",chinese:"挑剔；吹毛求疵",is_spoken:true,spoken_alternative:"",example:"Constantly **nitpicking** every draft can slow down the creative process significantly. （不斷吹毛求疵地審查每份草稿會大幅拖慢創作過程。）"},
-  {word:"inherently",pos:"副詞",kk:"/ɪnˈhɪrəntlɪ/",chinese:"本質上；天生地",is_spoken:false,spoken_alternative:"by nature 或 naturally（口語常用）",example:"No profession is **inherently** superior to another — what matters is the dedication you bring. （沒有任何職業在本質上優於另一種，重要的是你投入的熱忱。）"},
-  {word:"blunt",pos:"形容詞",kk:"/blʌnt/",chinese:"直接的；鈍的",is_spoken:true,spoken_alternative:"",example:"Her **blunt** feedback stung at first, but it ultimately helped me improve much faster. （她直接的回饋起初讓人難受，但最終幫助我更快地進步。）"},
-  {word:"mentally",pos:"副詞",kk:"/ˈmɛntlɪ/",chinese:"精神上；心理上",is_spoken:true,spoken_alternative:"",example:"Being **mentally** prepared for a tough conversation is as important as knowing what to say. （在心理上為艱難的對話做好準備，與知道說什麼一樣重要。）"},
-  {word:"hydrate",pos:"動詞",kk:"/ˈhaɪdret/",chinese:"補水",is_spoken:true,spoken_alternative:"",example:"Athletes are reminded to **hydrate** regularly during training, not just when thirsty. （運動員被提醒在訓練期間定期補水，而不僅僅是在感到口渴時。）"},
-  {word:"substitute",pos:"名詞/動詞",kk:"/ˈsʌbstɪˌtut/",chinese:"代替品；替代",is_spoken:true,spoken_alternative:"",example:"Almond milk works well as a **substitute** for dairy in most baking recipes. （杏仁奶在大多數烘焙食譜中可以很好地代替乳製品。）"},
-  {word:"predict",pos:"動詞",kk:"/prɪˈdɪkt/",chinese:"預測",is_spoken:true,spoken_alternative:"",example:"Analysts were able to **predict** the market correction based on historical patterns. （分析師能夠根據歷史規律預測市場修正。）"},
-  {word:"strenuous",pos:"形容詞",kk:"/ˈstrɛnjuəs/",chinese:"費力的",is_spoken:false,spoken_alternative:"hard 或 intense（口語常用）",example:"The doctor advised against any **strenuous** activity for at least two weeks after surgery. （醫生建議術後至少兩週內避免任何費力的活動。）"},
-  {word:"inevitable",pos:"形容詞",kk:"/ɪnˈɛvɪtɪbl/",chinese:"不可避免的",is_spoken:true,spoken_alternative:"",example:"Change is **inevitable**, and those who adapt quickly tend to be far more successful. （變化是不可避免的，那些能夠快速適應的人往往更加成功。）"},
-  {word:"obsessed",pos:"形容詞",kk:"/əbˈsɛst/",chinese:"著迷的；痴迷的",is_spoken:true,spoken_alternative:"",example:"She became so **obsessed** with perfection that she struggled to submit any work at all. （她對完美的痴迷讓她甚至難以提交任何作品。）"},
-  {word:"imprint",pos:"動詞/名詞",kk:"/ɪmˈprɪnt/",chinese:"留下印記；銘印",is_spoken:false,spoken_alternative:"leave a mark（口語說法）",example:"Traveling young can **imprint** values of empathy and adaptability for life. （年輕時旅行能夠在人生中留下同理心和適應力的深刻印記。）"},
-  {word:"imperceptible",pos:"形容詞",kk:"/ˌɪmpɚˈsɛptɪbl/",chinese:"難以察覺的",is_spoken:false,spoken_alternative:"barely noticeable（口語說法）",example:"The improvement was **imperceptible** at first but became undeniable after six months. （進步起初難以察覺，但六個月後變得無可否認。）"},
-  {word:"oblige",pos:"動詞",kk:"/əˈblaɪdʒ/",chinese:"使負有義務；幫忙",is_spoken:false,spoken_alternative:"have to 或 feel like you must（口語說法）",example:"As a host, she felt **obliged** to make every guest feel welcome despite her own tiredness. （作為主人，儘管她自己也很疲倦，但她覺得有責任讓每位客人感到賓至如歸。）"},
-  {word:"ambitious",pos:"形容詞",kk:"/æmˈbɪʃəs/",chinese:"有抱負的",is_spoken:true,spoken_alternative:"",example:"She set an **ambitious** goal to publish her first book before turning thirty — and succeeded. （她設定了一個雄心勃勃的目標，要在三十歲前出版第一本書——並且成功了。）"},
-  {word:"justifiable",pos:"形容詞",kk:"/ˈdʒʌstɪˌfaɪəbl/",chinese:"合理的",is_spoken:false,spoken_alternative:"understandable 或 makes sense（口語說法）",example:"The cost overrun was **justifiable** given the unexpected technical challenges mid-project. （考慮到專案中途出現的意外技術挑戰，超支是合理的。）"},
-  {word:"metropolitan",pos:"形容詞/名詞",kk:"/ˌmɛtrəˈpɑlɪtən/",chinese:"大都市的",is_spoken:false,spoken_alternative:"big city（口語常用）",example:"The **metropolitan** area saw rapid growth driven by the expansion of the tech sector. （大都市區因科技業的擴張而實現了快速增長。）"},
-  {word:"impressionable",pos:"形容詞",kk:"/ɪmˈprɛʃənəbl/",chinese:"易受影響的",is_spoken:false,spoken_alternative:"easily influenced（口語說法）",example:"Young people are highly **impressionable**, which is why the media they consume matters so much. （年輕人很容易受到影響，這就是為什麼他們接觸的媒體如此重要。）"},
-  {word:"inventory",pos:"名詞",kk:"/ˈɪnvənˌtɔrɪ/",chinese:"存貨；清單",is_spoken:false,spoken_alternative:"stock（口語常用）",example:"The warehouse team conducted a full **inventory** check before the year-end audit. （倉庫團隊在年終審計前進行了全面的存貨盤點。）"},
-  {word:"stationary",pos:"形容詞",kk:"/ˈsteʃəˌnɛrɪ/",chinese:"靜止的；不動的",is_spoken:false,spoken_alternative:"not moving（口語說法）",example:"The vehicle remained **stationary** for over 20 minutes before merging back into traffic. （車輛靜止了超過20分鐘才重新匯入車流。）"},
-  {word:"customary",pos:"形容詞",kk:"/ˈkʌstəˌmɛrɪ/",chinese:"習慣的；傳統的",is_spoken:false,spoken_alternative:"normal 或 usual（口語常用）",example:"It is **customary** in many cultures to bring a gift when visiting someone's home. （在許多文化中，拜訪別人家時帶禮物是慣例。）"},
-  {word:"conscious",pos:"形容詞",kk:"/ˈkɑnʃəs/",chinese:"有意識的；清醒的",is_spoken:true,spoken_alternative:"",example:"She made a **conscious** effort to speak more slowly when presenting to international audiences. （她有意識地努力在向國際觀眾演講時放慢語速。）"},
-  {word:"increasingly",pos:"副詞",kk:"/ɪnˈkrisɪŋlɪ/",chinese:"越來越；日益",is_spoken:true,spoken_alternative:"",example:"Remote work is becoming **increasingly** common as companies embrace flexible arrangements. （隨著公司接受靈活安排，遠端工作變得越來越普遍。）"},
-  {word:"endorsement",pos:"名詞",kk:"/ɪnˈdɔrsmənt/",chinese:"代言；認可",is_spoken:false,spoken_alternative:"support 或 backing（口語常用）",example:"The product gained credibility after receiving an **endorsement** from a respected medical professional. （這款產品在獲得受人尊敬的醫療專業人員的認可後聲譽大增。）"},
-  {word:"extenuating",pos:"形容詞",kk:"/ɪkˈstɛnjuˌetɪŋ/",chinese:"情有可原的",is_spoken:false,spoken_alternative:"special circumstances（口語說法）",example:"The judge considered **extenuating** circumstances before delivering a more lenient sentence. （法官在作出較寬鬆的判決前考慮了情有可原的情況。）"},
-  {word:"resilient",pos:"形容詞",kk:"/rɪˈzɪlɪənt/",chinese:"有韌性的",is_spoken:true,spoken_alternative:"",example:"The most **resilient** organizations treat failure as a learning opportunity, not a defeat. （最有韌性的組織將失敗視為學習機會，而非挫敗。）"},
-  {word:"mentality",pos:"名詞",kk:"/mɛnˈtælɪtɪ/",chinese:"心態；思維方式",is_spoken:true,spoken_alternative:"",example:"Adopting a growth **mentality** means believing your abilities can develop through effort. （採用成長心態意味著相信你的能力可以通過努力而發展。）"},
-  {word:"gritty",pos:"形容詞",kk:"/ˈɡrɪtɪ/",chinese:"有毅力的；堅韌的",is_spoken:true,spoken_alternative:"",example:"Her **gritty** determination to keep training through setbacks earned everyone's respect. （她在挫折中堅持訓練的頑強毅力贏得了所有人的尊重。）"}
-];
+const SHEET_KEY = 'vocab_sheet_url';
+let vocab = [], deck = [], idx = 0, mode = 'mc', score = {c:0,w:0}, done = false;
 
-let deck=[],idx=0,mode='mc',score={c:0,w:0},done=false;
-
-function go(t){
-  ['quiz','bank'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank'][i]===t));
-  if(t==='quiz')initQuiz();
-  if(t==='bank')renderBank();
+function loadSheet(){
+  const url = localStorage.getItem(SHEET_KEY)||'';
+  if(url){
+    document.getElementById('sheetUrl').value = url;
+    document.getElementById('sheetUrl2').value = url;
+    document.getElementById('setup-section').style.display = 'none';
+    fetchVocab(url);
+  }
 }
 
-function bold(s,w){return(s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>').replace(new RegExp('\\b('+w+')\\b','gi'),'<em>$1</em>');}
+function saveSheet(){
+  const url = document.getElementById('sheetUrl').value.trim();
+  doSaveSheet(url, 'sheetStatus');
+}
+function saveSheet2(){
+  const url = document.getElementById('sheetUrl2').value.trim();
+  doSaveSheet(url, 'sheetStatus2');
+}
+function doSaveSheet(url, statusId){
+  if(!url.includes('docs.google.com')){
+    document.getElementById(statusId).textContent = '請貼上正確的 Google Sheets 網址';
+    document.getElementById(statusId).className = 'astatus ano';
+    return;
+  }
+  localStorage.setItem(SHEET_KEY, url);
+  document.getElementById(statusId).textContent = '已儲存，載入中...';
+  document.getElementById(statusId).className = 'astatus aok';
+  document.getElementById('setup-section').style.display = 'none';
+  fetchVocab(url);
+}
+
+function reloadData(){
+  const url = localStorage.getItem(SHEET_KEY)||'';
+  if(url) fetchVocab(url);
+}
+
+async function fetchVocab(url){
+  document.getElementById('loading-section').style.display = 'block';
+  document.getElementById('main-section').style.display = 'none';
+  document.getElementById('error-section').style.display = 'none';
+
+  // Make sure URL has output=csv
+  let csvUrl = url;
+  if(!csvUrl.includes('output=csv')){
+    csvUrl = csvUrl.split('?')[0] + '?output=csv';
+  }
+  // Add cache buster
+  csvUrl += '&t=' + Date.now();
+
+  try{
+    const res = await fetch(csvUrl);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    vocab = parseCSV(text);
+    if(vocab.length === 0) throw new Error('試算表是空的，或格式不正確');
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('main-section').style.display = 'block';
+    document.getElementById('word-count').textContent = vocab.length + ' 個單字 · KK音標 · 口語程度 · 三種測驗';
+    document.getElementById('st').textContent = vocab.length;
+    initQuiz();
+  } catch(e){
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('error-section').style.display = 'block';
+    document.getElementById('err-msg').innerHTML = `
+      <strong>載入失敗</strong><br><br>
+      錯誤：${e.message}<br><br>
+      請確認：<br>
+      1. 試算表已發布（檔案 → 共用 → 發布到網路）<br>
+      2. 選擇的格式是 <strong>CSV</strong><br>
+      3. 網址格式正確（包含 <code>/pub?output=csv</code>）<br><br>
+      <button class="btn btn-ink" onclick="document.getElementById('error-section').style.display='none';document.getElementById('setup-section').style.display='block'">重新設定</button>
+    `;
+  }
+}
+
+function parseCSV(text){
+  const lines = text.trim().split('\n');
+  if(lines.length < 2) return [];
+  const header = parseCSVRow(lines[0]).map(h => h.trim().toLowerCase());
+  const results = [];
+  for(let i = 1; i < lines.length; i++){
+    if(!lines[i].trim()) continue;
+    const cols = parseCSVRow(lines[i]);
+    const obj = {};
+    header.forEach((h, idx) => { obj[h] = (cols[idx]||'').trim(); });
+    if(!obj.word) continue;
+    results.push({
+      word: obj.word,
+      pos: obj.pos || '',
+      kk: obj.kk || '',
+      chinese: obj.chinese || '',
+      is_spoken: obj.is_spoken && obj.is_spoken.toUpperCase() === 'TRUE',
+      spoken_alternative: obj.spoken_alternative || '',
+      example: obj.example || ''
+    });
+  }
+  return results;
+}
+
+function parseCSVRow(row){
+  const result = [];
+  let cur = '', inQ = false;
+  for(let i = 0; i < row.length; i++){
+    const c = row[i];
+    if(c === '"'){
+      if(inQ && row[i+1] === '"'){ cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if(c === ',' && !inQ){
+      result.push(cur); cur = '';
+    } else {
+      cur += c;
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+function go(t){
+  ['quiz','bank','settings'].forEach(s => document.getElementById('sec-'+s).classList.toggle('on', s===t));
+  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('on', ['quiz','bank','settings'][i]===t));
+  if(t==='bank') renderBank();
+}
+
+function bold(s,w){
+  return (s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>').replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi'),'<em>$1</em>');
+}
 
 function mkWCard(d){
-  const el=document.createElement('div');el.className='wcard';
-  const sb=d.is_spoken?'<span class="badge bspeak">口語常用</span>':'<span class="badge bformal">書面/正式</span>';
-  const alt=(!d.is_spoken&&d.spoken_alternative)?`<div class="altbox">口語說法：${d.spoken_alternative}</div>`:'';
-  el.innerHTML=`<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
+  const el = document.createElement('div'); el.className = 'wcard';
+  const sb = d.is_spoken ? '<span class="badge bspeak">口語常用</span>' : '<span class="badge bformal">書面/正式</span>';
+  const alt = (!d.is_spoken && d.spoken_alternative) ? `<div class="altbox">口語說法：${d.spoken_alternative}</div>` : '';
+  el.innerHTML = `<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
 <div class="wkk">${d.kk}</div>
 <div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
-<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>`;
+<div class="hr"></div><div class="exline">${bold(d.example, d.word)}</div>`;
   return el;
 }
 
 function renderBank(){
-  const q=(document.getElementById('search').value||'').toLowerCase();
-  const filtered=vocab.filter(v=>v.word.toLowerCase().includes(q)||(v.chinese||'').includes(q));
-  const list=document.getElementById('bank-list');list.innerHTML='';
-  if(!filtered.length){const e=document.createElement('div');e.className='qmpty';e.textContent='找不到符合的單字';list.appendChild(e);return;}
-  filtered.forEach(d=>list.appendChild(mkWCard(d)));
+  const q = (document.getElementById('search').value||'').toLowerCase();
+  const filtered = vocab.filter(v => v.word.toLowerCase().includes(q) || v.chinese.includes(q));
+  const list = document.getElementById('bank-list'); list.innerHTML = '';
+  if(!filtered.length){ list.innerHTML = '<div style="text-align:center;padding:2rem;color:#bbb;font-size:14px">找不到符合的單字</div>'; return; }
+  filtered.forEach(d => list.appendChild(mkWCard(d)));
 }
 
 function initQuiz(){
-  document.getElementById('st').textContent=vocab.length;
-  score={c:0,w:0};updScore();deck=shuf([...vocab]);idx=0;done=false;render();
+  score = {c:0,w:0}; updScore(); deck = shuf([...vocab]); idx = 0; done = false; render();
 }
 function setMode(m){
-  mode=m;['mc','fill','spoken'].forEach(id=>document.getElementById('m-'+id).classList.toggle('on',id===m));
-  deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render();
+  mode = m; ['mc','fill','spoken'].forEach(id => document.getElementById('m-'+id).classList.toggle('on', id===m));
+  deck = shuf([...vocab]); idx = 0; score = {c:0,w:0}; updScore(); done = false; render();
 }
-function updScore(){document.getElementById('sc').textContent=score.c;document.getElementById('sw').textContent=score.w;}
-function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function updScore(){ document.getElementById('sc').textContent = score.c; document.getElementById('sw').textContent = score.w; }
+function shuf(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
 
 function render(){
-  const qa=document.getElementById('qa');
-  if(idx>=deck.length){renderSum(qa);return;}
-  const item=deck[idx];done=false;
-  if(mode==='mc')renderMC(qa,item);
-  else if(mode==='fill')renderFill(qa,item);
-  else renderSpoken(qa,item);
+  const qa = document.getElementById('qa');
+  if(idx >= deck.length){ renderSum(qa); return; }
+  const item = deck[idx]; done = false;
+  if(mode==='mc') renderMC(qa, item);
+  else if(mode==='fill') renderFill(qa, item);
+  else renderSpoken(qa, item);
 }
-function nav(){return`<div class="qnav"><span class="qct">${idx+1} / ${deck.length}</span><button class="btn btn-ink" id="nxt" onclick="next()" style="display:none">下一題 →</button></div>`;}
+function nav(){ return `<div class="qnav"><span class="qct">${idx+1} / ${deck.length}</span><button class="btn btn-ink" id="nxt" onclick="next()" style="display:none">下一題 →</button></div>`; }
 
-function renderMC(qa,item){
-  const others=shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
-  const choices=shuf([item.chinese,...others]);
-  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div><div class="qpos">${item.pos}</div>
+function renderMC(qa, item){
+  const others = shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
+  const choices = shuf([item.chinese, ...others]);
+  qa.innerHTML = `<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div><div class="qpos">${item.pos}</div>
 <div class="qprompt">選出正確的中文意思</div>
 <div class="choices">${choices.map(c=>`<button class="ch" onclick="chkMC(this,'${esc(c)}','${esc(item.chinese)}')">${c}</button>`).join('')}</div>
 <div class="qres" id="qr"></div></div>${nav()}`;
 }
-function chkMC(btn,chosen,correct){
-  if(done)return;done=true;const ok=chosen===correct;
+function chkMC(btn, chosen, correct){
+  if(done) return; done = true;
+  const ok = chosen===correct;
   if(ok){score.c++;btn.classList.add('ok');}
   else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
-  updScore();showRes(ok);
+  updScore(); showRes(ok);
 }
-function renderFill(qa,item){
-  qa.innerHTML=`<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
+
+function renderFill(qa, item){
+  qa.innerHTML = `<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
 <div class="qword" style="font-size:18px;font-family:'DM Sans',sans-serif;color:#888;font-weight:400;margin-bottom:4px">${item.chinese}</div>
 <div class="qkk" style="text-align:center;margin-bottom:1rem">${item.kk}</div>
 <div class="qprompt">拼出這個英文單字</div>
 <input class="filinput" id="fi" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="輸入英文...">
 <div style="text-align:center"><button class="btn btn-ink" onclick="chkFill('${esc(item.word)}')">確認</button></div>
 <div class="qres" id="qr"></div></div>${nav()}`;
-  const fi=document.getElementById('fi');fi.focus();
-  fi.addEventListener('keydown',e=>{if(e.key==='Enter')chkFill(item.word);});
+  const fi = document.getElementById('fi'); fi.focus();
+  fi.addEventListener('keydown', e=>{ if(e.key==='Enter') chkFill(item.word); });
 }
 function chkFill(correct){
-  if(done)return;const fi=document.getElementById('fi');const val=fi.value.trim().toLowerCase();if(!val)return;
-  done=true;const ok=val===correct.toLowerCase();
-  fi.classList.add(ok?'ok':'no');if(ok)score.c++;else{score.w++;fi.value=correct;}
-  updScore();showRes(ok);
+  if(done) return; const fi = document.getElementById('fi'); const val = fi.value.trim().toLowerCase(); if(!val) return;
+  done = true; const ok = val===correct.toLowerCase();
+  fi.classList.add(ok?'ok':'no'); if(ok) score.c++; else{score.w++;fi.value=correct;}
+  updScore(); showRes(ok);
 }
-function renderSpoken(qa,item){
-  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div>
+
+function renderSpoken(qa, item){
+  qa.innerHTML = `<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div>
 <div class="qpos">${item.pos} — ${item.chinese}</div>
 <div class="qprompt" style="margin-top:1rem">這個單字在日常口語中常用嗎？</div>
 <div class="choices" style="flex-direction:row;gap:10px;display:flex">
@@ -386,31 +375,33 @@ function renderSpoken(qa,item){
 </div>
 <div class="qres" id="qr"></div></div>${nav()}`;
 }
-function chkSpoken(btn,chosen,correct){
-  if(done)return;done=true;const ok=chosen===correct;
+function chkSpoken(btn, chosen, correct){
+  if(done) return; done = true; const ok = chosen===correct;
   if(ok){score.c++;btn.classList.add('ok');}
   else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{const bv=b.textContent.includes('口語');if(bv===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
-  updScore();showRes(ok);
+  updScore(); showRes(ok);
 }
+
 function showRes(ok){
-  const item=deck[idx],el=document.getElementById('qr');
-  const alt=(!item.is_spoken&&item.spoken_alternative)?`<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>`:'';
-  el.className='qres on';
-  el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example,item.word)}</div>`;
-  document.getElementById('nxt').style.display='inline-block';
+  const item = deck[idx], el = document.getElementById('qr');
+  const alt = (!item.is_spoken && item.spoken_alternative) ? `<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>` : '';
+  el.className = 'qres on';
+  el.innerHTML = `<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example, item.word)}</div>`;
+  document.getElementById('nxt').style.display = 'inline-block';
 }
-function next(){idx++;done=false;render();}
+function next(){ idx++; done = false; render(); }
+
 function renderSum(qa){
-  const total=score.c+score.w,pct=total?Math.round(score.c/total*100):0;
-  const msg=pct>=80?'很棒，繼續保持！':pct>=50?'還不錯，再複習一下！':'繼續加油！';
-  qa.innerHTML=`<div class="summ"><div class="spct">${pct}%</div><div class="smsg">${score.c} / ${total} 答對 &nbsp;·&nbsp; ${msg}</div>
+  const total = score.c+score.w, pct = total ? Math.round(score.c/total*100) : 0;
+  const msg = pct>=80 ? '很棒，繼續保持！' : pct>=50 ? '還不錯，再複習一下！' : '繼續加油！';
+  qa.innerHTML = `<div class="summ"><div class="spct">${pct}%</div><div class="smsg">${score.c} / ${total} 答對 &nbsp;·&nbsp; ${msg}</div>
 <div class="sbtns"><button class="btn btn-ink" onclick="reAll()">再來一次</button><button class="btn btn-soft" onclick="reMiss()">換個模式</button></div></div>`;
 }
-function reAll(){deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render();}
-function reMiss(){const modes=['mc','fill','spoken'];setMode(modes[(modes.indexOf(mode)+1)%modes.length]);}
-function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function reAll(){ deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render(); }
+function reMiss(){ const modes=['mc','fill','spoken']; setMode(modes[(modes.indexOf(mode)+1)%modes.length]); }
+function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
-initQuiz();
+loadSheet();
 </script>
 </body>
 </html>
