@@ -17,9 +17,10 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .tab.on{background:#fff;color:#1c1c1a;box-shadow:0 1px 4px rgba(0,0,0,0.09)}
 .sec{display:none}.sec.on{display:block}
 .box{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:12px}
-.srow{display:flex;gap:10px;margin-bottom:1.25rem}
+.srow{display:flex;gap:8px;margin-bottom:1.25rem}
 .sbox{flex:1;background:#fff;border:1px solid #e8e7e2;border-radius:12px;padding:.75rem;text-align:center}
-.sn{font-size:22px;font-weight:600}.sl{font-size:12px;color:#aaa;margin-top:2px}
+.sn{font-size:20px;font-weight:600}.sl{font-size:11px;color:#aaa;margin-top:2px}
+.sn.red{color:#b44}.sn.green{color:#2d7a5f}.sn.orange{color:#b07020}
 .mrow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
 .mbtn{padding:7px 14px;border:1.5px solid #e8e7e2;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff;cursor:pointer;color:#999;transition:all 0.15s}
 .mbtn.on{border-color:#1c1c1a;color:#1c1c1a}
@@ -28,6 +29,9 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .btn:disabled{opacity:0.35;cursor:default}
 .btn-ink{background:#1c1c1a;color:#fff}
 .btn-soft{background:#edece8;color:#555;border:none}
+.btn-red{background:#fff0f0;color:#a03030;border:none}
+.btn-orange{background:#fff8ec;color:#8a5a00;border:none}
+.btn-full{width:100%}
 .badge{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
 .bpos{background:#f0efe9;color:#777}
 .bspeak{background:#e2f5ee;color:#1a6b4a}
@@ -66,10 +70,16 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bo
 .filinput:focus{border-color:#aaa}
 .filinput.ok{border-color:#2d9e72;background:#e2f5ee;color:#1a6b4a}
 .filinput.no{border-color:#e05050;background:#fff0f0;color:#a03030}
-.summ{text-align:center;padding:2rem 1rem;background:#fff;border:1px solid #e8e7e2;border-radius:16px}
+.summ{background:#fff;border:1px solid #e8e7e2;border-radius:16px;padding:1.5rem;margin-bottom:12px}
+.summ-top{text-align:center;margin-bottom:1.25rem}
 .spct{font-size:48px;font-family:'DM Serif Display',serif;font-weight:400;margin-bottom:4px}
-.smsg{font-size:14px;color:#888;margin-bottom:1.5rem}
-.sbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.smsg{font-size:14px;color:#888;margin-bottom:1rem}
+.summ-btns{display:flex;flex-direction:column;gap:8px}
+.summ-row{display:flex;gap:8px}
+.wrong-list{margin-top:1rem}
+.wrong-list-title{font-size:12px;color:#aaa;margin-bottom:8px;font-weight:500;letter-spacing:0.3px}
+.wrong-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wrong-chip{font-size:13px;background:#fff0f0;color:#a03030;border-radius:8px;padding:4px 10px;border:1px solid #fdd}
 input[type=text]{font-family:'DM Sans',sans-serif;font-size:14px;color:#1c1c1a;background:#f7f6f2;border:1px solid #e8e7e2;border-radius:8px;outline:none;padding:9px 12px;width:100%}
 input[type=text]:focus{border-color:#aaa}
 input::placeholder{color:#ccc}
@@ -77,7 +87,6 @@ input::placeholder{color:#ccc}
 .spin{width:28px;height:28px;border:3px solid #e8e7e2;border-top-color:#999;border-radius:50%;animation:sp 0.7s linear infinite;margin:0 auto 1rem}
 @keyframes sp{to{transform:rotate(360deg)}}
 .err-box{background:#fff8f8;border:1px solid #f5d0d0;border-radius:14px;padding:1.5rem;text-align:center;color:#b44;font-size:14px;line-height:1.8}
-.err-box a{color:#b44}
 .setup-box{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1.5rem;margin-bottom:12px}
 .setup-box h3{font-size:15px;font-weight:600;margin-bottom:0.75rem}
 .setup-box p{font-size:13px;color:#777;line-height:1.7;margin-bottom:0.75rem}
@@ -89,6 +98,23 @@ input[type=url]:focus{border-color:#aaa}
 .aok{color:#2d7a5f}.ano{color:#b44}
 .reload-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:#aaa;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-bottom:1rem}
 .reload-btn:hover{color:#1c1c1a}
+
+/* batch selector */
+.batch-bar{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1rem 1.1rem;margin-bottom:12px}
+.batch-bar-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.batch-label{font-size:13px;font-weight:500}
+.batch-meta{font-size:12px;color:#aaa}
+.batch-btns{display:flex;gap:6px;flex-wrap:wrap}
+.bbtn{padding:6px 13px;border:1.5px solid #e8e7e2;border-radius:20px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;cursor:pointer;color:#999;white-space:nowrap}
+.bbtn.on{border-color:#1c1c1a;color:#1c1c1a;background:#f7f6f2}
+.bbtn.has-wrong{border-color:#e8b4b4;color:#a03030;background:#fff8f8}
+.bbtn.has-wrong.on{border-color:#e05050;background:#fff0f0}
+.batch-size-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #f0efe9}
+.batch-size-label{font-size:12px;color:#aaa;white-space:nowrap}
+select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:#f7f6f2;border:1px solid #e8e7e2;border-radius:8px;outline:none;padding:6px 10px;cursor:pointer}
+
+/* progress ring */
+.prog-ring{display:inline-block;vertical-align:middle;margin-right:6px}
 </style>
 </head>
 <body>
@@ -118,10 +144,34 @@ input[type=url]:focus{border-color:#aaa}
     </div>
 
     <div class="sec on" id="sec-quiz">
+      <!-- batch selector -->
+      <div class="batch-bar">
+        <div class="batch-bar-top">
+          <span class="batch-label">練習範圍</span>
+          <span class="batch-meta" id="batch-meta"></span>
+        </div>
+        <div class="batch-btns" id="batch-btns"></div>
+        <div class="batch-size-row">
+          <span class="batch-size-label">每批幾個：</span>
+          <select id="batchSize" onchange="rebuildBatches()">
+            <option value="20">20 個</option>
+            <option value="30">30 個</option>
+            <option value="50">50 個</option>
+            <option value="0">全部</option>
+          </select>
+          <span class="batch-size-label" style="margin-left:8px">排序：</span>
+          <select id="batchOrder" onchange="rebuildBatches()">
+            <option value="original">照順序</option>
+            <option value="random">隨機</option>
+          </select>
+        </div>
+      </div>
+
       <div class="srow">
-        <div class="sbox"><div class="sn" id="st">0</div><div class="sl">單字</div></div>
-        <div class="sbox"><div class="sn" id="sc" style="color:#2d7a5f">0</div><div class="sl">答對</div></div>
-        <div class="sbox"><div class="sn" id="sw" style="color:#b44">0</div><div class="sl">答錯</div></div>
+        <div class="sbox"><div class="sn" id="st">0</div><div class="sl">本批單字</div></div>
+        <div class="sbox"><div class="sn green" id="sc">0</div><div class="sl">答對</div></div>
+        <div class="sbox"><div class="sn red" id="sw">0</div><div class="sl">答錯</div></div>
+        <div class="sbox"><div class="sn orange" id="swrong-total">0</div><div class="sl">累計錯誤</div></div>
       </div>
       <div class="mrow">
         <button class="mbtn on" id="m-mc" onclick="setMode('mc')">選擇題</button>
@@ -149,6 +199,8 @@ input[type=url]:focus{border-color:#aaa}
         <div class="astatus" id="sheetStatus2"></div>
         <br>
         <button class="btn btn-soft" onclick="reloadData()">↻ 重新載入單字</button>
+        <br><br>
+        <button class="btn btn-red" onclick="clearWrong()">清除所有錯誤紀錄</button>
       </div>
     </div>
   </div>
@@ -163,8 +215,21 @@ input[type=url]:focus{border-color:#aaa}
 
 <script>
 const SHEET_KEY = 'vocab_sheet_url';
-let vocab = [], deck = [], idx = 0, mode = 'mc', score = {c:0,w:0}, done = false;
+const WRONG_KEY = 'vocab_wrong_v1';
 
+let vocab = [], batches = [], currentBatch = 0;
+let deck = [], idx = 0, mode = 'mc', score = {c:0,w:0}, done = false;
+let wrongWords = {}; // word -> count (persistent)
+let sessionWrong = new Set(); // wrong this session
+
+/* ── persistence ── */
+function loadWrong(){ try{ wrongWords = JSON.parse(localStorage.getItem(WRONG_KEY)||'{}'); }catch{ wrongWords={}; } }
+function saveWrong(){ localStorage.setItem(WRONG_KEY, JSON.stringify(wrongWords)); }
+function clearWrong(){ if(!confirm('確定清除所有錯誤紀錄？')) return; wrongWords={}; saveWrong(); sessionWrong=new Set(); rebuildBatches(); alert('已清除'); }
+
+function totalWrongCount(){ return Object.keys(wrongWords).length; }
+
+/* ── sheet ── */
 function loadSheet(){
   const url = localStorage.getItem(SHEET_KEY)||'';
   if(url){
@@ -174,199 +239,220 @@ function loadSheet(){
     fetchVocab(url);
   }
 }
-
-function saveSheet(){
-  const url = document.getElementById('sheetUrl').value.trim();
-  doSaveSheet(url, 'sheetStatus');
-}
-function saveSheet2(){
-  const url = document.getElementById('sheetUrl2').value.trim();
-  doSaveSheet(url, 'sheetStatus2');
-}
-function doSaveSheet(url, statusId){
-  if(!url.includes('docs.google.com')){
-    document.getElementById(statusId).textContent = '請貼上正確的 Google Sheets 網址';
-    document.getElementById(statusId).className = 'astatus ano';
-    return;
-  }
+function saveSheet(){ doSaveSheet(document.getElementById('sheetUrl').value.trim(), 'sheetStatus'); }
+function saveSheet2(){ doSaveSheet(document.getElementById('sheetUrl2').value.trim(), 'sheetStatus2'); }
+function doSaveSheet(url, sid){
+  if(!url.includes('docs.google.com')){ setStatus(sid,'請貼上正確的 Google Sheets 網址',false); return; }
   localStorage.setItem(SHEET_KEY, url);
-  document.getElementById(statusId).textContent = '已儲存，載入中...';
-  document.getElementById(statusId).className = 'astatus aok';
+  setStatus(sid,'已儲存，載入中...',true);
   document.getElementById('setup-section').style.display = 'none';
   fetchVocab(url);
 }
-
-function reloadData(){
-  const url = localStorage.getItem(SHEET_KEY)||'';
-  if(url) fetchVocab(url);
-}
+function setStatus(id,msg,ok){ const e=document.getElementById(id); e.textContent=msg; e.className='astatus '+(ok?'aok':'ano'); }
+function reloadData(){ const url=localStorage.getItem(SHEET_KEY)||''; if(url) fetchVocab(url); }
 
 async function fetchVocab(url){
   document.getElementById('loading-section').style.display = 'block';
   document.getElementById('main-section').style.display = 'none';
   document.getElementById('error-section').style.display = 'none';
-
-  // Make sure URL has output=csv
-  let csvUrl = url;
-  if(!csvUrl.includes('output=csv')){
-    csvUrl = csvUrl.split('?')[0] + '?output=csv';
-  }
-  // Add cache buster
-  csvUrl += '&t=' + Date.now();
-
+  let csvUrl = url.includes('output=csv') ? url : url.split('?')[0]+'?output=csv';
+  csvUrl += '&t='+Date.now();
   try{
     const res = await fetch(csvUrl);
-    if(!res.ok) throw new Error('HTTP ' + res.status);
+    if(!res.ok) throw new Error('HTTP '+res.status);
     const text = await res.text();
     vocab = parseCSV(text);
-    if(vocab.length === 0) throw new Error('試算表是空的，或格式不正確');
+    if(!vocab.length) throw new Error('試算表是空的，或格式不正確');
     document.getElementById('loading-section').style.display = 'none';
     document.getElementById('main-section').style.display = 'block';
-    document.getElementById('word-count').textContent = vocab.length + ' 個單字 · KK音標 · 口語程度 · 三種測驗';
-    document.getElementById('st').textContent = vocab.length;
-    initQuiz();
-  } catch(e){
+    document.getElementById('word-count').textContent = vocab.length+' 個單字 · KK音標 · 口語程度 · 三種測驗';
+    rebuildBatches();
+  }catch(e){
     document.getElementById('loading-section').style.display = 'none';
     document.getElementById('error-section').style.display = 'block';
-    document.getElementById('err-msg').innerHTML = `
-      <strong>載入失敗</strong><br><br>
-      錯誤：${e.message}<br><br>
-      請確認：<br>
-      1. 試算表已發布（檔案 → 共用 → 發布到網路）<br>
-      2. 選擇的格式是 <strong>CSV</strong><br>
-      3. 網址格式正確（包含 <code>/pub?output=csv</code>）<br><br>
-      <button class="btn btn-ink" onclick="document.getElementById('error-section').style.display='none';document.getElementById('setup-section').style.display='block'">重新設定</button>
-    `;
+    document.getElementById('err-msg').innerHTML = `<strong>載入失敗</strong><br><br>錯誤：${e.message}<br><br>
+      請確認：<br>1. 試算表已發布（檔案 → 共用 → 發布到網路）<br>2. 格式選 <strong>CSV</strong><br>
+      3. 網址包含 <code>/pub?output=csv</code><br><br>
+      <button class="btn btn-ink" onclick="document.getElementById('error-section').style.display='none';document.getElementById('setup-section').style.display='block'">重新設定</button>`;
   }
 }
 
+/* ── CSV ── */
 function parseCSV(text){
   const lines = text.trim().split('\n');
   if(lines.length < 2) return [];
-  const header = parseCSVRow(lines[0]).map(h => h.trim().toLowerCase());
+  const header = parseCSVRow(lines[0]).map(h=>h.trim().toLowerCase());
   const results = [];
-  for(let i = 1; i < lines.length; i++){
+  for(let i=1;i<lines.length;i++){
     if(!lines[i].trim()) continue;
     const cols = parseCSVRow(lines[i]);
-    const obj = {};
-    header.forEach((h, idx) => { obj[h] = (cols[idx]||'').trim(); });
+    const obj = {}; header.forEach((h,j)=>{ obj[h]=(cols[j]||'').trim(); });
     if(!obj.word) continue;
-    results.push({
-      word: obj.word,
-      pos: obj.pos || '',
-      kk: obj.kk || '',
-      chinese: obj.chinese || '',
-      is_spoken: obj.is_spoken && obj.is_spoken.toUpperCase() === 'TRUE',
-      spoken_alternative: obj.spoken_alternative || '',
-      example: obj.example || ''
-    });
+    results.push({ word:obj.word, pos:obj.pos||'', kk:obj.kk||'', chinese:obj.chinese||'',
+      is_spoken: obj.is_spoken&&obj.is_spoken.toUpperCase()==='TRUE',
+      spoken_alternative:obj.spoken_alternative||'', example:obj.example||'' });
   }
   return results;
 }
-
 function parseCSVRow(row){
-  const result = [];
-  let cur = '', inQ = false;
-  for(let i = 0; i < row.length; i++){
-    const c = row[i];
-    if(c === '"'){
-      if(inQ && row[i+1] === '"'){ cur += '"'; i++; }
-      else inQ = !inQ;
-    } else if(c === ',' && !inQ){
-      result.push(cur); cur = '';
-    } else {
-      cur += c;
-    }
+  const result=[]; let cur='',inQ=false;
+  for(let i=0;i<row.length;i++){
+    const c=row[i];
+    if(c==='"'){ if(inQ&&row[i+1]==='"'){cur+='"';i++;}else inQ=!inQ; }
+    else if(c===','&&!inQ){result.push(cur);cur='';}
+    else cur+=c;
   }
-  result.push(cur);
-  return result;
+  result.push(cur); return result;
 }
 
+/* ── BATCHES ── */
+function rebuildBatches(){
+  const size = parseInt(document.getElementById('batchSize').value);
+  const order = document.getElementById('batchOrder').value;
+  let pool = [...vocab];
+  if(order === 'random') pool = shuf(pool);
+  if(size === 0){
+    batches = [pool];
+  } else {
+    batches = [];
+    for(let i=0;i<pool.length;i+=size) batches.push(pool.slice(i,i+size));
+  }
+  // clamp currentBatch
+  if(currentBatch >= batches.length) currentBatch = 0;
+  renderBatchBtns();
+  startBatch(currentBatch);
+}
+
+function renderBatchBtns(){
+  const container = document.getElementById('batch-btns');
+  container.innerHTML = '';
+  // "全部錯誤" button if any
+  const wc = totalWrongCount();
+  if(wc > 0){
+    const b = document.createElement('button');
+    b.className = 'bbtn has-wrong' + (currentBatch === -1 ? ' on' : '');
+    b.textContent = `錯題複習 (${wc})`;
+    b.onclick = () => startWrongReview();
+    container.appendChild(b);
+  }
+  batches.forEach((batch,i)=>{
+    const wrongInBatch = batch.filter(w=>wrongWords[w.word]).length;
+    const b = document.createElement('button');
+    b.className = 'bbtn'+(currentBatch===i?' on':'')+(wrongInBatch>0?' has-wrong':'');
+    b.textContent = batches.length===1 ? '全部' : `第${i+1}批${wrongInBatch>0?' ·'+wrongInBatch+'錯':''}`;
+    b.onclick = ()=>{ currentBatch=i; renderBatchBtns(); startBatch(i); };
+    container.appendChild(b);
+  });
+  document.getElementById('batch-meta').textContent =
+    batches.length===1 ? `共 ${vocab.length} 個` :
+    `共 ${batches.length} 批，每批 ${parseInt(document.getElementById('batchSize').value)} 個`;
+  document.getElementById('swrong-total').textContent = wc;
+}
+
+function startBatch(i){
+  currentBatch = i;
+  renderBatchBtns();
+  const batch = batches[i];
+  deck = shuf([...batch]);
+  document.getElementById('st').textContent = deck.length;
+  score={c:0,w:0}; updScore(); idx=0; done=false; render();
+}
+
+function startWrongReview(){
+  currentBatch = -1;
+  renderBatchBtns();
+  const wrongList = vocab.filter(w=>wrongWords[w.word]);
+  if(!wrongList.length){ alert('沒有錯誤紀錄！'); return; }
+  deck = shuf(wrongList);
+  document.getElementById('st').textContent = deck.length;
+  score={c:0,w:0}; updScore(); idx=0; done=false; render();
+}
+
+/* ── TABS ── */
 function go(t){
-  ['quiz','bank','settings'].forEach(s => document.getElementById('sec-'+s).classList.toggle('on', s===t));
-  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('on', ['quiz','bank','settings'][i]===t));
+  ['quiz','bank','settings'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank','settings'][i]===t));
   if(t==='bank') renderBank();
 }
 
+/* ── QUIZ RENDER ── */
 function bold(s,w){
-  return (s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>').replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi'),'<em>$1</em>');
+  return (s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>')
+    .replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi'),'<em>$1</em>');
 }
-
 function mkWCard(d){
-  const el = document.createElement('div'); el.className = 'wcard';
-  const sb = d.is_spoken ? '<span class="badge bspeak">口語常用</span>' : '<span class="badge bformal">書面/正式</span>';
-  const alt = (!d.is_spoken && d.spoken_alternative) ? `<div class="altbox">口語說法：${d.spoken_alternative}</div>` : '';
-  el.innerHTML = `<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
+  const el=document.createElement('div');el.className='wcard';
+  const sb=d.is_spoken?'<span class="badge bspeak">口語常用</span>':'<span class="badge bformal">書面/正式</span>';
+  const alt=(!d.is_spoken&&d.spoken_alternative)?`<div class="altbox">口語說法：${d.spoken_alternative}</div>`:'';
+  el.innerHTML=`<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
 <div class="wkk">${d.kk}</div>
 <div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
-<div class="hr"></div><div class="exline">${bold(d.example, d.word)}</div>`;
+<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>`;
   return el;
 }
-
 function renderBank(){
-  const q = (document.getElementById('search').value||'').toLowerCase();
-  const filtered = vocab.filter(v => v.word.toLowerCase().includes(q) || v.chinese.includes(q));
-  const list = document.getElementById('bank-list'); list.innerHTML = '';
-  if(!filtered.length){ list.innerHTML = '<div style="text-align:center;padding:2rem;color:#bbb;font-size:14px">找不到符合的單字</div>'; return; }
-  filtered.forEach(d => list.appendChild(mkWCard(d)));
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const filtered=vocab.filter(v=>v.word.toLowerCase().includes(q)||v.chinese.includes(q));
+  const list=document.getElementById('bank-list');list.innerHTML='';
+  if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:2rem;color:#bbb;font-size:14px">找不到符合的單字</div>';return;}
+  filtered.forEach(d=>list.appendChild(mkWCard(d)));
 }
 
-function initQuiz(){
-  score = {c:0,w:0}; updScore(); deck = shuf([...vocab]); idx = 0; done = false; render();
-}
 function setMode(m){
-  mode = m; ['mc','fill','spoken'].forEach(id => document.getElementById('m-'+id).classList.toggle('on', id===m));
-  deck = shuf([...vocab]); idx = 0; score = {c:0,w:0}; updScore(); done = false; render();
+  mode=m;['mc','fill','spoken'].forEach(id=>document.getElementById('m-'+id).classList.toggle('on',id===m));
+  if(currentBatch===-1) startWrongReview(); else startBatch(currentBatch);
 }
-function updScore(){ document.getElementById('sc').textContent = score.c; document.getElementById('sw').textContent = score.w; }
-function shuf(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
+function updScore(){ document.getElementById('sc').textContent=score.c; document.getElementById('sw').textContent=score.w; }
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 function render(){
-  const qa = document.getElementById('qa');
-  if(idx >= deck.length){ renderSum(qa); return; }
-  const item = deck[idx]; done = false;
-  if(mode==='mc') renderMC(qa, item);
-  else if(mode==='fill') renderFill(qa, item);
-  else renderSpoken(qa, item);
+  const qa=document.getElementById('qa');
+  if(idx>=deck.length){renderSum(qa);return;}
+  const item=deck[idx];done=false;
+  if(mode==='mc') renderMC(qa,item);
+  else if(mode==='fill') renderFill(qa,item);
+  else renderSpoken(qa,item);
 }
-function nav(){ return `<div class="qnav"><span class="qct">${idx+1} / ${deck.length}</span><button class="btn btn-ink" id="nxt" onclick="next()" style="display:none">下一題 →</button></div>`; }
+function nav(){return`<div class="qnav"><span class="qct">${idx+1} / ${deck.length}</span><button class="btn btn-ink" id="nxt" onclick="next()" style="display:none">下一題 →</button></div>`;}
 
-function renderMC(qa, item){
-  const others = shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
-  const choices = shuf([item.chinese, ...others]);
-  qa.innerHTML = `<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div><div class="qpos">${item.pos}</div>
+function renderMC(qa,item){
+  // pick distractors from whole vocab for more variety
+  const others=shuf(vocab.filter(v=>v.word!==item.word)).slice(0,3).map(v=>v.chinese);
+  const choices=shuf([item.chinese,...others]);
+  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div><div class="qpos">${item.pos}</div>
 <div class="qprompt">選出正確的中文意思</div>
 <div class="choices">${choices.map(c=>`<button class="ch" onclick="chkMC(this,'${esc(c)}','${esc(item.chinese)}')">${c}</button>`).join('')}</div>
 <div class="qres" id="qr"></div></div>${nav()}`;
 }
-function chkMC(btn, chosen, correct){
-  if(done) return; done = true;
-  const ok = chosen===correct;
+function chkMC(btn,chosen,correct){
+  if(done)return;done=true;const ok=chosen===correct;
+  recordResult(deck[idx].word,ok);
   if(ok){score.c++;btn.classList.add('ok');}
   else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
-  updScore(); showRes(ok);
+  updScore();showRes(ok);
 }
 
-function renderFill(qa, item){
-  qa.innerHTML = `<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
+function renderFill(qa,item){
+  qa.innerHTML=`<div class="qcard"><div class="qpos" style="margin-bottom:4px">${item.pos}</div>
 <div class="qword" style="font-size:18px;font-family:'DM Sans',sans-serif;color:#888;font-weight:400;margin-bottom:4px">${item.chinese}</div>
 <div class="qkk" style="text-align:center;margin-bottom:1rem">${item.kk}</div>
 <div class="qprompt">拼出這個英文單字</div>
 <input class="filinput" id="fi" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="輸入英文...">
 <div style="text-align:center"><button class="btn btn-ink" onclick="chkFill('${esc(item.word)}')">確認</button></div>
 <div class="qres" id="qr"></div></div>${nav()}`;
-  const fi = document.getElementById('fi'); fi.focus();
-  fi.addEventListener('keydown', e=>{ if(e.key==='Enter') chkFill(item.word); });
+  const fi=document.getElementById('fi');fi.focus();
+  fi.addEventListener('keydown',e=>{if(e.key==='Enter')chkFill(item.word);});
 }
 function chkFill(correct){
-  if(done) return; const fi = document.getElementById('fi'); const val = fi.value.trim().toLowerCase(); if(!val) return;
-  done = true; const ok = val===correct.toLowerCase();
-  fi.classList.add(ok?'ok':'no'); if(ok) score.c++; else{score.w++;fi.value=correct;}
-  updScore(); showRes(ok);
+  if(done)return;const fi=document.getElementById('fi');const val=fi.value.trim().toLowerCase();if(!val)return;
+  done=true;const ok=val===correct.toLowerCase();
+  recordResult(correct,ok);
+  fi.classList.add(ok?'ok':'no');if(ok)score.c++;else{score.w++;fi.value=correct;}
+  updScore();showRes(ok);
 }
 
-function renderSpoken(qa, item){
-  qa.innerHTML = `<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div>
+function renderSpoken(qa,item){
+  qa.innerHTML=`<div class="qcard"><div class="qword">${item.word}</div><div class="qkk">${item.kk}</div>
 <div class="qpos">${item.pos} — ${item.chinese}</div>
 <div class="qprompt" style="margin-top:1rem">這個單字在日常口語中常用嗎？</div>
 <div class="choices" style="flex-direction:row;gap:10px;display:flex">
@@ -375,32 +461,84 @@ function renderSpoken(qa, item){
 </div>
 <div class="qres" id="qr"></div></div>${nav()}`;
 }
-function chkSpoken(btn, chosen, correct){
-  if(done) return; done = true; const ok = chosen===correct;
+function chkSpoken(btn,chosen,correct){
+  if(done)return;done=true;const ok=chosen===correct;
+  recordResult(deck[idx].word,ok);
   if(ok){score.c++;btn.classList.add('ok');}
   else{score.w++;btn.classList.add('no');document.querySelectorAll('.ch').forEach(b=>{const bv=b.textContent.includes('口語');if(bv===correct)b.classList.add('ok');else if(!b.classList.contains('no'))b.classList.add('dim');});}
-  updScore(); showRes(ok);
+  updScore();showRes(ok);
+}
+
+function recordResult(word, ok){
+  if(!ok){
+    wrongWords[word] = (wrongWords[word]||0)+1;
+    sessionWrong.add(word);
+  } else {
+    // answered correctly this time — remove from wrong list
+    delete wrongWords[word];
+    sessionWrong.delete(word);
+  }
+  saveWrong();
+  document.getElementById('swrong-total').textContent = totalWrongCount();
 }
 
 function showRes(ok){
-  const item = deck[idx], el = document.getElementById('qr');
-  const alt = (!item.is_spoken && item.spoken_alternative) ? `<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>` : '';
-  el.className = 'qres on';
-  el.innerHTML = `<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example, item.word)}</div>`;
-  document.getElementById('nxt').style.display = 'inline-block';
+  const item=deck[idx],el=document.getElementById('qr');
+  const alt=(!item.is_spoken&&item.spoken_alternative)?`<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>`:'';
+  el.className='qres on';
+  el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example,item.word)}</div>`;
+  document.getElementById('nxt').style.display='inline-block';
 }
-function next(){ idx++; done = false; render(); }
+function next(){idx++;done=false;render();}
 
 function renderSum(qa){
-  const total = score.c+score.w, pct = total ? Math.round(score.c/total*100) : 0;
-  const msg = pct>=80 ? '很棒，繼續保持！' : pct>=50 ? '還不錯，再複習一下！' : '繼續加油！';
-  qa.innerHTML = `<div class="summ"><div class="spct">${pct}%</div><div class="smsg">${score.c} / ${total} 答對 &nbsp;·&nbsp; ${msg}</div>
-<div class="sbtns"><button class="btn btn-ink" onclick="reAll()">再來一次</button><button class="btn btn-soft" onclick="reMiss()">換個模式</button></div></div>`;
-}
-function reAll(){ deck=shuf([...vocab]);idx=0;score={c:0,w:0};updScore();done=false;render(); }
-function reMiss(){ const modes=['mc','fill','spoken']; setMode(modes[(modes.indexOf(mode)+1)%modes.length]); }
-function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+  const total=score.c+score.w,pct=total?Math.round(score.c/total*100):0;
+  const msg=pct>=80?'很棒，繼續保持！':pct>=50?'還不錯，再複習一下！':'繼續加油！';
 
+  // wrong words in this round
+  const wrongThisRound = deck.filter(w=>wrongWords[w.word]);
+  const wrongChips = wrongThisRound.length
+    ? `<div class="wrong-list">
+        <div class="wrong-list-title">本輪答錯（${wrongThisRound.length} 個）</div>
+        <div class="wrong-chips">${wrongThisRound.map(w=>`<span class="wrong-chip">${w.word}</span>`).join('')}</div>
+       </div>` : '';
+
+  const hasWrong = totalWrongCount() > 0;
+
+  qa.innerHTML=`<div class="summ">
+  <div class="summ-top">
+    <div class="spct">${pct}%</div>
+    <div class="smsg">${score.c} / ${total} 答對 &nbsp;·&nbsp; ${msg}</div>
+  </div>
+  ${wrongChips}
+  <div class="summ-btns" style="margin-top:1.25rem">
+    <div class="summ-row">
+      <button class="btn btn-ink" style="flex:1" onclick="reAll()">再來一次（本批）</button>
+      ${currentBatch!==-1&&batches.length>1?`<button class="btn btn-soft" style="flex:1" onclick="nextBatch()">下一批 →</button>`:''}
+    </div>
+    ${hasWrong?`<button class="btn btn-red btn-full" onclick="startWrongReview()">🔁 複習全部錯題（${totalWrongCount()} 個）</button>`:''}
+    ${wrongThisRound.length?`<button class="btn btn-orange btn-full" onclick="replayThisWrong()">重練本輪答錯（${wrongThisRound.length} 個）</button>`:''}
+  </div>
+</div>`;
+}
+
+function reAll(){ if(currentBatch===-1) startWrongReview(); else startBatch(currentBatch); }
+function nextBatch(){
+  const next=(currentBatch+1)%batches.length;
+  startBatch(next);
+}
+function replayThisWrong(){
+  // replay only words wrong in current deck
+  const wrongList = deck.filter(w=>wrongWords[w.word]);
+  if(!wrongList.length) return;
+  deck = shuf(wrongList);
+  document.getElementById('st').textContent = deck.length;
+  score={c:0,w:0};updScore();idx=0;done=false;render();
+}
+
+function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+
+loadWrong();
 loadSheet();
 </script>
 </body>
