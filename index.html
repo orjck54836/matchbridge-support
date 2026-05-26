@@ -115,6 +115,19 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
 
 /* progress ring */
 .prog-ring{display:inline-block;vertical-align:middle;margin-right:6px}
+.story-card{background:#fff;border:1px solid #e8e7e2;border-radius:14px;padding:1.25rem 1.3rem;margin-bottom:14px}
+.story-title{font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;margin-bottom:4px;color:#1c1c1a}
+.story-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.story-tag{font-size:11px;background:#e2f5ee;color:#1a6b4a;border-radius:20px;padding:2px 9px;cursor:pointer;border:1px solid #c5e8d8}
+.story-tag:hover{background:#c5e8d8}
+.story-body{font-size:14px;color:#444;line-height:1.9}
+.story-body em{font-style:normal;font-weight:600;color:#1a6b4a;background:#f0fbf5;border-radius:3px;padding:0 2px}
+.story-legend{margin-top:10px;padding-top:10px;border-top:1px solid #f0efe9;display:flex;flex-wrap:wrap;gap:6px}
+.story-legend-item{font-size:12px;color:#777;line-height:1.8}
+.story-legend-item strong{color:#1a6b4a;font-weight:500}
+.gen-btn{width:100%;padding:11px;border-radius:10px;background:#f0fbf5;border:1.5px solid #c5e8d8;color:#1a6b4a;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;margin-bottom:14px;transition:background 0.15s}
+.gen-btn:hover{background:#e2f5ee}
+.gen-btn:disabled{opacity:0.4;cursor:default}
 </style>
 </head>
 <body>
@@ -140,6 +153,7 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
     <div class="tabs">
       <button class="tab on" onclick="go('quiz')">測驗</button>
       <button class="tab" onclick="go('bank')">單字庫</button>
+      <button class="tab" onclick="go('stories')">口語故事</button>
       <button class="tab" onclick="go('settings')">設定</button>
     </div>
 
@@ -186,6 +200,10 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
         <input type="text" id="search" placeholder="搜尋單字或中文..." oninput="renderBank()">
       </div>
       <div id="bank-list"></div>
+    </div>
+
+    <div class="sec" id="sec-stories">
+      <div id="stories-list"></div>
     </div>
 
     <div class="sec" id="sec-settings">
@@ -326,6 +344,16 @@ function rebuildBatches(){
 function renderBatchBtns(){
   const container = document.getElementById('batch-btns');
   container.innerHTML = '';
+  // "口語單字" button
+  const spokenCount = vocab.filter(v=>v.is_spoken).length;
+  if(spokenCount > 0){
+    const b = document.createElement('button');
+    b.className = 'bbtn' + (currentBatch === -2 ? ' on' : '');
+    b.style.borderColor = '#1a6b4a'; b.style.color = '#1a6b4a';
+    b.textContent = `🗣 口語重點 (${spokenCount})`;
+    b.onclick = () => startSpokenReview();
+    container.appendChild(b);
+  }
   // "全部錯誤" button if any
   const wc = totalWrongCount();
   if(wc > 0){
@@ -358,6 +386,16 @@ function startBatch(i){
   score={c:0,w:0}; updScore(); idx=0; done=false; render();
 }
 
+function startSpokenReview(){
+  currentBatch = -2;
+  renderBatchBtns();
+  const spokenList = vocab.filter(v=>v.is_spoken);
+  if(!spokenList.length){ alert('沒有口語單字！'); return; }
+  deck = shuf(spokenList);
+  document.getElementById('st').textContent = deck.length;
+  score={c:0,w:0}; updScore(); idx=0; done=false; render();
+}
+
 function startWrongReview(){
   currentBatch = -1;
   renderBatchBtns();
@@ -370,9 +408,10 @@ function startWrongReview(){
 
 /* ── TABS ── */
 function go(t){
-  ['quiz','bank','settings'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank','settings'][i]===t));
+  ['quiz','bank','stories','settings'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank','stories','settings'][i]===t));
   if(t==='bank') renderBank();
+  if(t==='stories') renderStories();
 }
 
 /* ── QUIZ RENDER ── */
@@ -522,7 +561,7 @@ function renderSum(qa){
 </div>`;
 }
 
-function reAll(){ if(currentBatch===-1) startWrongReview(); else startBatch(currentBatch); }
+function reAll(){ if(currentBatch===-1) startWrongReview(); else if(currentBatch===-2) startSpokenReview(); else startBatch(currentBatch); }
 function nextBatch(){
   const next=(currentBatch+1)%batches.length;
   startBatch(next);
@@ -537,6 +576,106 @@ function replayThisWrong(){
 }
 
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+
+/* ── SPOKEN STORIES ── */
+const STORIES = [
+  {
+    title:"職場新人的第一週",
+    words:["day-to-day","awkward","pretend","candid","boundaries","demeanor","conscientious","bump into","out of nowhere","entry-level"],
+    body:`Starting a new **entry-level** job is never easy. The **day-to-day** routines feel unfamiliar, the office dynamics can be **awkward**, and it's tempting to **pretend** you already know everything. But the most **conscientious** professionals know that projecting a calm **demeanor** — even when confused — goes a long way. （開始一份新的入門工作從來都不容易。日常例行公事感覺陌生，辦公室動態可能尷尬，人們很容易假裝自己什麼都知道。但最謹慎的專業人士知道，即使在困惑時保持冷靜的舉止也大有幫助。）
+
+On her third day she **bump**ed **into** her manager **out of nowhere** near the coffee machine. She wanted to **pretend** to be busy, but instead chose to be **candid** about a question she'd been holding back. That one honest exchange helped her set clear **boundaries** around her workload from day one. （第三天她在咖啡機旁突然偶遇了她的經理。她想假裝很忙，但反而選擇坦誠地提出她一直憋著的問題。那一次誠實的交流幫助她從第一天起就清楚地設定了工作量的界線。）`
+  },
+  {
+    title:"克服學習停滯期",
+    words:["plateau","stuck","ramp up","brush up on","go over","warm up","keep up","hang in","wind down","fluidity","mundane","day-to-day"],
+    body:`Every language learner hits a **plateau** at some point. You feel **stuck**, your **day-to-day** practice feels **mundane**, and progress seems invisible. The key is not to panic — instead, **ramp up** variety in how you study. （每個語言學習者在某個時候都會遇到停滯期。你感到卡住，日常練習感覺單調，進步似乎看不見。關鍵是不要恐慌——相反，增加學習方式的多樣性。）
+
+Start each session by **warm**ing **up** with easy material you already know, then **go over** new vocabulary carefully. **Brush up on** phrases you've forgotten rather than chasing new ones. **Keep up** the consistency even on hard days — **hang in** there and **wind down** properly after each session so your brain consolidates. Over time, **fluidity** will return naturally. （每次學習開始時先用你已經知道的簡單材料熱身，然後仔細複習新詞彙。溫習你已經忘記的片語，而不是追逐新的。即使在困難的日子也要保持一致性——堅持下去，每次學習後適當放鬆，讓你的大腦鞏固記憶。隨著時間的推移，流暢度將自然恢復。）`
+  },
+  {
+    title:"一個精明的主管",
+    words:["executive","bossy","pushy","manipulate","candid","demeanor","shrewd","detect","awareness","boundaries","caliber","conscientious"],
+    body:`Not every **executive** earns their title through **caliber** alone. Some are **bossy** without vision, **pushy** without purpose, or worse — they **manipulate** others while projecting a polished **demeanor**. The **conscientious** ones, however, lead differently. （不是每個主管都單靠水準贏得頭銜。有些人沒有遠見地專橫，沒有目標地強迫推銷，或者更糟——他們在展示光滑舉止的同時操縱他人。然而謹慎的那些人以不同的方式領導。）
+
+A **shrewd** leader uses **awareness** to **detect** when team morale is slipping — often **out of nowhere** — and acts before things **flare up**. They are **candid** about expectations and respect everyone's **boundaries**. Their high **caliber** isn't just technical — it's emotional intelligence that makes others want to **keep up** and grow. （精明的領導者用意識來察覺團隊士氣何時在下滑——通常突然出現——並在事情爆發前採取行動。他們坦誠地表達期望並尊重每個人的界線。他們的高水準不僅僅是技術性的——這是讓他人想要跟上並成長的情商。）`
+  },
+  {
+    title:"說話方式的力量",
+    words:["candid","soften","blunt","talkative","demeanor","briefly","matter of fact","confess","trait","characteristic","pejorative","derogatory","synonym"],
+    body:`The words we choose reveal our **characteristic** thinking patterns. Using **pejorative** or **derogatory** language — even **unintentionally** — can damage trust faster than any mistake. A good communicator knows how to be **blunt** and **candid** while still finding ways to **soften** the delivery. （我們選擇的詞語揭示了我們的特質思維模式。使用貶義或貶損的語言——即使是無意中——可能比任何錯誤更快地損害信任。好的溝通者知道如何在直接坦誠的同時仍然找到軟化表達的方法。）
+
+Some people are naturally **talkative** and use **derogatory** **synonym**s casually without realising the impact. Others stay quiet but speak with precision — **briefly** and in a **matter-of-fact** tone. Whatever your **trait**, learn to **confess** when your words land wrong. That alone is a **characteristic** of truly great communicators. （有些人天生健談，會隨意使用貶損的同義詞而沒有意識到影響。其他人保持沉默但精確地說話——簡短而平實直接。無論你的特質如何，學會在你的話落錯地方時承認。僅此一點就是真正偉大溝通者的特徵。）`
+  },
+  {
+    title:"處理壓力與界線",
+    words:["hectic","wind down","cut down","phobia","boundaries","primal","aware","prone to","once in a while","stop and smell the roses","hang in","manic","day-to-day"],
+    body:`Modern life is **hectic**. Between **manic** work schedules, constant notifications and a **phobia** of falling behind, it's easy to forget that rest is a **primal** need — not a luxury. People who are **prone to** overworking rarely **cut down** voluntarily until something breaks. （現代生活忙碌。在瘋狂的工作時程、不斷的通知和落後恐懼症之間，很容易忘記休息是一種原始需求——而不是奢侈。容易過度工作的人很少主動削減，直到有什麼東西崩潰。）
+
+The solution isn't dramatic — it's **day-to-day** **awareness** of your **boundaries**. **Wind down** properly each evening. **Once in a while**, **stop and smell the roses**: take a slow walk, enjoy a meal without your phone, let yourself **dim** the noise. **Hang in** there on hard days, but also know when to rest. That balance is what makes **consistent** high performance **sustainable**. （解決方案並不戲劇化——這是對你界線的日常意識。每天晚上適當放鬆。偶爾停下來欣賞生活：慢慢散步，享受不看手機的一餐，讓自己淡化噪音。在困難的日子堅持下去，但也要知道何時休息。那種平衡是讓持續高績效可持續的關鍵。）`
+  },
+  {
+    title:"真實 vs 人工",
+    words:["artificial","pretend","candid","genuine","demeanor","scam","detect","uncanny","conscientious","attentiveness","meaningful","authentic"],
+    body:`We live in an age of **artificial** polish. Resumes are fluffed, social feeds are curated, and **demeanor** in interviews can feel like performance. But **conscientious** observers can usually **detect** what's **genuine** and what's **pretend**ed — often with **uncanny** accuracy. （我們生活在一個人工修飾的時代。簡歷被過度美化，社交動態被精心策劃，面試中的舉止可能感覺像表演。但謹慎的觀察者通常能察覺什麼是真實的，什麼是假裝的——通常準確得令人稱奇。）
+
+The irony is that **artificial** presentation often **backfires**. A **candid** moment — a **confess**ion of a mistake, a real laugh, a **briefly** dropped guard — does more to build trust than any polished pitch. **Attentiveness** to the other person, not a rehearsed **demeanor**, is what creates truly **meaningful** connection. And connection, not performance, is what **outlasts** every **scam**. （諷刺的是，人工呈現往往適得其反。一個坦誠的時刻——承認錯誤、真實的笑聲、短暫地放下防備——比任何精心準備的推銷更能建立信任。對另一個人的細心，而不是排練過的舉止，才是創造真正有意義連接的關鍵。而連接，而非表演，才是比任何騙局都更持久的東西。）`
+  },
+  {
+    title:"金錢觀與生活方式",
+    words:["splurge","shopaholic","recession","inflation","poverty","livelihood","wealthy","lucrative","cut down","prodigal","for the sake of","charity"],
+    body:`When **inflation** hits and a **recession** looms, people's relationship with money shifts sharply. The **shopaholic** who used to **splurge** every weekend suddenly feels **vulnerable**. The **prodigal** spender realises that **livelihood** security isn't guaranteed — even for the **wealthy**. （當通貨膨脹來臨、衰退迫近時，人們與金錢的關係急劇轉變。過去每個週末大肆消費的購物狂突然感到脆弱。揮霍的消費者意識到生計安全並非理所當然——即使對富人也是如此。）
+
+Smart financial awareness means knowing when to **cut down** and when to invest. A **lucrative** opportunity isn't always worth chasing **for the sake of** short-term gain. And sometimes the most rewarding use of money is **charity** — supporting those in **poverty** whose **livelihood**s have been crushed by forces beyond their control. （聰明的財務意識意味著知道何時削減，何時投資。一個有利可圖的機會並不總是值得為了短期利益而追逐。有時金錢最有價值的用途是慈善——支持那些生計被無法控制的力量摧毀而陷入貧困的人。）`
+  },
+  {
+    title:"社交場合的藝術",
+    words:["talkative","acquaintance","flirtatious","awkward","boundaries","bump into","out of nowhere","confess","uncanny","demeanor","once in a while","warm up"],
+    body:`Social situations can be a minefield. You **bump into** an **acquaintance** **out of nowhere**, and **suddenly** you're scrambling to **warm up** the conversation. If they're **talkative**, great — but if they're **flirtatious** or cross your **boundaries**, the whole interaction becomes **awkward** fast. （社交場合可能是個雷區。你突然偶遇一個熟人，你突然在努力熱身對話。如果他們健談，很好——但如果他們調情或越過你的界線，整個互動很快就會變得尷尬。）
+
+The key is **demeanor**: stay warm but firm. **Once in a while**, it helps to **confess** you're not a naturally social person — most people find that **uncanny** honesty refreshing rather than off-putting. Real connection doesn't come from performing — it comes from being real. （關鍵是舉止：保持溫暖但堅定。偶爾，承認自己不是天生的社交型人是有幫助的——大多數人會發現那種令人稱奇的誠實令人耳目一新，而不是令人反感。真正的連接不來自表演——它來自真實。）`
+  }
+];
+
+function renderStories(){
+  const el = document.getElementById('stories-list');
+  el.innerHTML = '';
+
+  const intro = document.createElement('div');
+  intro.style.cssText = 'font-size:13px;color:#888;margin-bottom:14px;line-height:1.7';
+  intro.innerHTML = '每篇短文包含多個 <span style="color:#1a6b4a;font-weight:500">口語常用單字</span>，單字互相引用加深記憶。點擊標籤可快速查詢單字庫。';
+  el.appendChild(intro);
+
+  STORIES.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'story-card';
+
+    // highlight words in body
+    let body = s.body;
+    // bold markdown
+    body = body.replace(/\*\*([^*]+)\*\*/g, '<em>$1</em>');
+
+    // build word legend from vocab
+    const wordDefs = s.words.map(w => {
+      const found = vocab.find(v => v.word.toLowerCase() === w.toLowerCase());
+      return found ? `<span class="story-legend-item"><strong>${found.word}</strong> ${found.chinese}</span>` : '';
+    }).filter(Boolean).join('');
+
+    card.innerHTML = `
+      <div class="story-title">${s.title}</div>
+      <div class="story-tags">${s.words.map(w=>`<span class="story-tag" onclick="searchWord('${w}')">${w}</span>`).join('')}</div>
+      <div class="story-body">${body}</div>
+      ${wordDefs ? `<div class="story-legend">${wordDefs}</div>` : ''}
+    `;
+    el.appendChild(card);
+  });
+}
+
+function searchWord(w){
+  go('bank');
+  document.getElementById('search').value = w;
+  renderBank();
+}
 
 loadWrong();
 loadSheet();
