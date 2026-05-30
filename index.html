@@ -128,6 +128,17 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
 .gen-btn{width:100%;padding:11px;border-radius:10px;background:#f0fbf5;border:1.5px solid #c5e8d8;color:#1a6b4a;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;margin-bottom:14px;transition:background 0.15s}
 .gen-btn:hover{background:#e2f5ee}
 .gen-btn:disabled{opacity:0.4;cursor:default}
+.fav-empty{text-align:center;padding:3rem 1rem;color:#bbb;font-size:15px;line-height:2}
+.fav-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:2px 4px;line-height:1;opacity:0.35;transition:opacity 0.15s,transform 0.1s}
+.fav-btn:hover{opacity:0.7}
+.fav-btn.active{opacity:1;transform:scale(1.15)}
+.note-area{width:100%;border:1px solid #e8e7e2;border-radius:8px;padding:8px 10px;font-size:13px;font-family:'DM Sans',sans-serif;color:#444;background:#fafaf7;resize:none;outline:none;min-height:52px;margin-top:6px;line-height:1.6}
+.note-area:focus{border-color:#aaa}
+.note-area::placeholder{color:#ccc}
+.note-saved{font-size:11px;color:#2d7a5f;margin-top:3px;display:none}
+.fav-card{background:#fff;border:1.5px solid #f5d68a;border-radius:14px;padding:1rem 1.1rem;margin-bottom:10px;animation:up 0.2s ease}
+.fav-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.fav-note-display{font-size:13px;color:#888;margin-top:6px;padding:6px 10px;background:#fffbee;border-radius:7px;border:1px solid #f5e89a;line-height:1.6;white-space:pre-wrap}
 </style>
 </head>
 <body>
@@ -153,7 +164,8 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
     <div class="tabs">
       <button class="tab on" onclick="go('quiz')">測驗</button>
       <button class="tab" onclick="go('bank')">單字庫</button>
-      <button class="tab" onclick="go('stories')">口語故事</button>
+      <button class="tab" onclick="go('fav')">⭐ 最愛</button>
+      <button class="tab" onclick="go('stories')">故事</button>
       <button class="tab" onclick="go('settings')">設定</button>
     </div>
 
@@ -202,6 +214,18 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
       <div id="bank-list"></div>
     </div>
 
+    <div class="sec" id="sec-fav">
+      <div id="fav-empty" class="fav-empty">還沒有最愛單字<br><span style="font-size:12px;color:#ccc">在單字庫或測驗中點 ⭐ 加入</span></div>
+      <div id="fav-actions" style="display:none">
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <button class="btn btn-ink" style="flex:1" onclick="startFavQuiz()">🎯 測驗最愛單字</button>
+          <button class="btn btn-red" onclick="clearFavs()">清空</button>
+        </div>
+        <div id="fav-count" style="font-size:12px;color:#aaa;margin-bottom:10px"></div>
+      </div>
+      <div id="fav-list"></div>
+    </div>
+
     <div class="sec" id="sec-stories">
       <div id="stories-list"></div>
     </div>
@@ -234,18 +258,22 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
 <script>
 const SHEET_KEY = 'vocab_sheet_url';
 const WRONG_KEY = 'vocab_wrong_v1';
+const FAV_KEY   = 'vocab_fav_v1';
 
 let vocab = [], batches = [], currentBatch = 0;
 let deck = [], idx = 0, mode = 'mc', score = {c:0,w:0}, done = false;
-let wrongWords = {}; // word -> count (persistent)
-let sessionWrong = new Set(); // wrong this session
+let wrongWords = {};
+let favWords   = {};
+let sessionWrong = new Set();
 
 /* ── persistence ── */
 function loadWrong(){ try{ wrongWords = JSON.parse(localStorage.getItem(WRONG_KEY)||'{}'); }catch{ wrongWords={}; } }
 function saveWrong(){ localStorage.setItem(WRONG_KEY, JSON.stringify(wrongWords)); }
 function clearWrong(){ if(!confirm('確定清除所有錯誤紀錄？')) return; wrongWords={}; saveWrong(); sessionWrong=new Set(); rebuildBatches(); alert('已清除'); }
-
 function totalWrongCount(){ return Object.keys(wrongWords).length; }
+
+function loadFavs(){ try{ favWords = JSON.parse(localStorage.getItem(FAV_KEY)||'{}'); }catch{ favWords={}; } }
+function saveFavs(){ localStorage.setItem(FAV_KEY, JSON.stringify(favWords)); }
 
 /* ── sheet ── */
 function loadSheet(){
@@ -344,6 +372,17 @@ function rebuildBatches(){
 function renderBatchBtns(){
   const container = document.getElementById('batch-btns');
   container.innerHTML = '';
+  // "⭐ 最愛" button
+  const fc = Object.keys(favWords).length;
+  if(fc > 0){
+    const b = document.createElement('button');
+    b.className = 'bbtn' + (currentBatch === -3 ? ' on' : '');
+    b.style.borderColor = '#c8a83a'; b.style.color = '#8a6200';
+    if(currentBatch===-3) b.style.background='#fffbee';
+    b.textContent = `⭐ 最愛 (${fc})`;
+    b.onclick = () => startFavQuiz();
+    container.appendChild(b);
+  }
   // "口語單字" button
   const spokenCount = vocab.filter(v=>v.is_spoken).length;
   if(spokenCount > 0){
@@ -408,9 +447,10 @@ function startWrongReview(){
 
 /* ── TABS ── */
 function go(t){
-  ['quiz','bank','stories','settings'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank','stories','settings'][i]===t));
+  ['quiz','bank','fav','stories','settings'].forEach(s=>document.getElementById('sec-'+s).classList.toggle('on',s===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['quiz','bank','fav','stories','settings'][i]===t));
   if(t==='bank') renderBank();
+  if(t==='fav') renderFavs();
   if(t==='stories') renderStories();
 }
 
@@ -419,22 +459,96 @@ function bold(s,w){
   return (s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>')
     .replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi'),'<em>$1</em>');
 }
-function mkWCard(d){
-  const el=document.createElement('div');el.className='wcard';
+function isFav(word){ return !!favWords[word]; }
+function toggleFav(word){
+  if(favWords[word]){ delete favWords[word]; }
+  else { favWords[word] = {note:''}; }
+  saveFavs();
+  document.querySelectorAll(`.fav-btn[data-word="${word}"]`).forEach(b=>{
+    b.classList.toggle('active', isFav(word));
+    b.title = isFav(word) ? '移除最愛' : '加入最愛';
+  });
+}
+function saveFavNote(word, note){
+  if(!favWords[word]) favWords[word]={note:''};
+  favWords[word].note = note;
+  saveFavs();
+}
+let noteTimers={};
+function debounceSaveNote(word,val){
+  clearTimeout(noteTimers[word]);
+  noteTimers[word]=setTimeout(()=>{
+    saveFavNote(word,val);
+    const el=document.getElementById('note-saved-'+word);
+    if(el){el.style.display='block';setTimeout(()=>el.style.display='none',1500);}
+  },600);
+}
+
+function mkWCard(d, inFavTab){
+  const el=document.createElement('div');
+  el.className = inFavTab ? 'fav-card' : 'wcard';
   const sb=d.is_spoken?'<span class="badge bspeak">口語常用</span>':'<span class="badge bformal">書面/正式</span>';
   const alt=(!d.is_spoken&&d.spoken_alternative)?`<div class="altbox">口語說法：${d.spoken_alternative}</div>`:'';
-  el.innerHTML=`<div class="whead"><span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}</div>
-<div class="wkk">${d.kk}</div>
-<div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
-<div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>`;
+  const favActive=isFav(d.word)?'active':'';
+  const noteVal=(favWords[d.word]&&favWords[d.word].note)||'';
+  const noteHtml = inFavTab
+    ? `<textarea class="note-area" placeholder="寫下筆記、記憶法、難點…" oninput="debounceSaveNote('${d.word}',this.value)">${noteVal}</textarea>
+       <div class="note-saved" id="note-saved-${d.word}">已儲存 ✓</div>`
+    : (noteVal ? `<div class="fav-note-display">📝 ${noteVal}</div>` : '');
+  const favCb = inFavTab
+    ? `toggleFav('${d.word}');renderFavs();`
+    : `toggleFav('${d.word}');`;
+  el.innerHTML=`
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px">
+      <div class="whead" style="margin-bottom:0;flex:1">
+        <span class="wtitle">${d.word}</span><span class="badge bpos">${d.pos}</span>${sb}
+      </div>
+      <button class="fav-btn ${favActive}" data-word="${d.word}" title="${isFav(d.word)?'移除最愛':'加入最愛'}" onclick="${favCb}">⭐</button>
+    </div>
+    <div class="wkk">${d.kk}</div>
+    <div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
+    <div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>
+    ${noteHtml}`;
   return el;
 }
+
+function renderFavs(){
+  const list=document.getElementById('fav-list');
+  const empty=document.getElementById('fav-empty');
+  const actions=document.getElementById('fav-actions');
+  const favList=vocab.filter(v=>favWords[v.word]);
+  if(!favList.length){
+    empty.style.display='block';actions.style.display='none';list.innerHTML='';return;
+  }
+  empty.style.display='none';actions.style.display='block';
+  document.getElementById('fav-count').textContent=`${favList.length} 個最愛單字`;
+  list.innerHTML='';
+  favList.forEach(d=>list.appendChild(mkWCard(d,true)));
+}
+
+function startFavQuiz(){
+  const favList=vocab.filter(v=>favWords[v.word]);
+  if(!favList.length){alert('還沒有最愛單字！');return;}
+  currentBatch=-3;
+  renderBatchBtns();
+  deck=shuf(favList);
+  document.getElementById('st').textContent=deck.length;
+  score={c:0,w:0};updScore();idx=0;done=false;
+  go('quiz');
+  render();
+}
+
+function clearFavs(){
+  if(!confirm('確定清空所有最愛單字和筆記？'))return;
+  favWords={};saveFavs();renderFavs();
+}
+
 function renderBank(){
   const q=(document.getElementById('search').value||'').toLowerCase();
   const filtered=vocab.filter(v=>v.word.toLowerCase().includes(q)||v.chinese.includes(q));
   const list=document.getElementById('bank-list');list.innerHTML='';
   if(!filtered.length){list.innerHTML='<div style="text-align:center;padding:2rem;color:#bbb;font-size:14px">找不到符合的單字</div>';return;}
-  filtered.forEach(d=>list.appendChild(mkWCard(d)));
+  filtered.forEach(d=>list.appendChild(mkWCard(d,false)));
 }
 
 function setMode(m){
@@ -524,8 +638,13 @@ function recordResult(word, ok){
 function showRes(ok){
   const item=deck[idx],el=document.getElementById('qr');
   const alt=(!item.is_spoken&&item.spoken_alternative)?`<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>`:'';
+  const favActive=isFav(item.word)?'active':'';
   el.className='qres on';
-  el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}<div class="qex">${bold(item.example,item.word)}</div>`;
+  el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}
+<div class="qex">${bold(item.example,item.word)}</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+  <button class="fav-btn ${favActive}" data-word="${item.word}" title="${isFav(item.word)?'移除最愛':'加入最愛'}" onclick="toggleFav('${item.word}');document.querySelectorAll('.fav-btn[data-word=\\'${item.word}\\']').forEach(b=>{b.classList.toggle('active',isFav('${item.word}'));})">⭐ ${isFav(item.word)?'已加入最愛':'加入最愛'}</button>
+</div>`;
   document.getElementById('nxt').style.display='inline-block';
 }
 function next(){idx++;done=false;render();}
@@ -561,7 +680,7 @@ function renderSum(qa){
 </div>`;
 }
 
-function reAll(){ if(currentBatch===-1) startWrongReview(); else if(currentBatch===-2) startSpokenReview(); else startBatch(currentBatch); }
+function reAll(){ if(currentBatch===-1) startWrongReview(); else if(currentBatch===-2) startSpokenReview(); else if(currentBatch===-3) startFavQuiz(); else startBatch(currentBatch); }
 function nextBatch(){
   const next=(currentBatch+1)%batches.length;
   startBatch(next);
@@ -678,6 +797,7 @@ function searchWord(w){
 }
 
 loadWrong();
+loadFavs();
 loadSheet();
 </script>
 </body>
