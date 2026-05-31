@@ -139,6 +139,12 @@ select{font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1a;background:
 .fav-card{background:#fff;border:1.5px solid #f5d68a;border-radius:14px;padding:1rem 1.1rem;margin-bottom:10px;animation:up 0.2s ease}
 .fav-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .fav-note-display{font-size:13px;color:#888;margin-top:6px;padding:6px 10px;background:#fffbee;border-radius:7px;border:1px solid #f5e89a;line-height:1.6;white-space:pre-wrap}
+.exref-strip{margin-top:10px;display:flex;flex-direction:column;gap:5px;padding:8px 10px;background:#f7f6f2;border-radius:9px;border:1px solid #eeede8}
+.exref-item{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;line-height:1.6}
+.exref-word{font-size:13px;font-weight:600;color:#1c1c1a;min-width:80px}
+.exref-pos{font-size:11px;background:#f0efe9;color:#777;border-radius:10px;padding:1px 7px;white-space:nowrap}
+.exref-kk{font-size:11px;color:#aaa;font-family:monospace;white-space:nowrap}
+.exref-zh{font-size:12px;color:#555}
 </style>
 </head>
 <body>
@@ -309,6 +315,7 @@ async function fetchVocab(url){
     const text = await res.text();
     vocab = parseCSV(text);
     if(!vocab.length) throw new Error('試算表是空的，或格式不正確');
+    buildVocabMap();
     document.getElementById('loading-section').style.display = 'none';
     document.getElementById('main-section').style.display = 'block';
     document.getElementById('word-count').textContent = vocab.length+' 個單字 · KK音標 · 口語程度 · 三種測驗';
@@ -459,6 +466,61 @@ function bold(s,w){
   return (s||'').replace(/\*\*([^*]+)\*\*/g,'<em>$1</em>')
     .replace(new RegExp('\\b('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi'),'<em>$1</em>');
 }
+
+// Extract all **bolded** words from an example sentence
+function extractBoldWords(example){
+  const matches = [];
+  const re = /\*\*([^*]+)\*\*/g;
+  let m;
+  while((m = re.exec(example)) !== null){
+    const w = m[1].trim();
+    if(w) matches.push(w);
+  }
+  return [...new Set(matches)];
+}
+
+// Build a vocab lookup map (lowercase word -> entry)
+let vocabMap = {};
+function buildVocabMap(){
+  vocabMap = {};
+  vocab.forEach(v => { vocabMap[v.word.toLowerCase()] = v; });
+}
+
+// Find a vocab entry for a bold word (handles multi-word phrases)
+function findEntry(w){
+  const lw = w.toLowerCase();
+  if(vocabMap[lw]) return vocabMap[lw];
+  // Try without trailing 's', 'ed', 'ing', 'ly'
+  const stems = [
+    lw.replace(/ing$/, ''), lw.replace(/ed$/, ''), lw.replace(/s$/, ''),
+    lw.replace(/ly$/, ''), lw.replace(/ness$/, ''), lw.replace(/tion$/, 'te'),
+  ];
+  for(const s of stems){
+    if(vocabMap[s]) return vocabMap[s];
+  }
+  return null;
+}
+
+// Build the inline word reference strip below an example
+function buildExRefStrip(example, mainWord){
+  const boldWords = extractBoldWords(example);
+  const refs = [];
+  for(const w of boldWords){
+    if(w.toLowerCase() === mainWord.toLowerCase()) continue; // skip the card's own word
+    const entry = findEntry(w);
+    if(entry){
+      refs.push(`<span class="exref-item">
+        <span class="exref-word">${entry.word}</span>
+        <span class="exref-pos">${entry.pos}</span>
+        <span class="exref-kk">${entry.kk}</span>
+        <span class="exref-zh">${entry.chinese}</span>
+      </span>`);
+    }
+  }
+  if(!refs.length) return '';
+  return `<div class="exref-strip">${refs.join('')}</div>`;
+}
+
 function isFav(word){ return !!favWords[word]; }
 function toggleFav(word){
   if(favWords[word]){ delete favWords[word]; }
@@ -507,7 +569,9 @@ function mkWCard(d, inFavTab){
     </div>
     <div class="wkk">${d.kk}</div>
     <div class="wrow"><span class="wl">中文</span><span class="wv">${d.chinese}</span></div>${alt}
-    <div class="hr"></div><div class="exline">${bold(d.example,d.word)}</div>
+    <div class="hr"></div>
+    <div class="exline">${bold(d.example,d.word)}</div>
+    ${buildExRefStrip(d.example, d.word)}
     ${noteHtml}`;
   return el;
 }
@@ -639,9 +703,11 @@ function showRes(ok){
   const item=deck[idx],el=document.getElementById('qr');
   const alt=(!item.is_spoken&&item.spoken_alternative)?`<div style="margin-top:6px;font-size:13px">口語說法：${item.spoken_alternative}</div>`:'';
   const favActive=isFav(item.word)?'active':'';
+  const refStrip = buildExRefStrip(item.example, item.word);
   el.className='qres on';
   el.innerHTML=`<div class="${ok?'qok':'qno'}">${ok?'答對了！':'答錯了 — 正確答案：'+item.chinese}</div>${alt}
 <div class="qex">${bold(item.example,item.word)}</div>
+${refStrip}
 <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
   <button class="fav-btn ${favActive}" data-word="${item.word}" title="${isFav(item.word)?'移除最愛':'加入最愛'}" onclick="toggleFav('${item.word}');document.querySelectorAll('.fav-btn[data-word=\\'${item.word}\\']').forEach(b=>{b.classList.toggle('active',isFav('${item.word}'));})">⭐ ${isFav(item.word)?'已加入最愛':'加入最愛'}</button>
 </div>`;
